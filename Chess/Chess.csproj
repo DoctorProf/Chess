@@ -1,0 +1,109 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>disable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Images\figures\Chesscom\**" />
+    <EmbeddedResource Remove="Images\figures\Chesscom\**" />
+    <None Remove="Images\figures\Chesscom\**" />
+    <Page Remove="Images\figures\Chesscom\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="caballo-blanco.png" />
+    <None Remove="Images\disign\caballo-blanco.png" />
+    <None Remove="Images\disign\phpZC7lK9.png" />
+    <None Remove="Images\disign\Q.png" />
+    <None Remove="Images\figures\Bishop_Black.png" />
+    <None Remove="Images\figures\Bishop_White.png" />
+    <None Remove="Images\figures\Chess.com\Bishop_Black.png" />
+    <None Remove="Images\figures\Chess.com\Bishop_White.png" />
+    <None Remove="Images\figures\Chess.com\Empty.png" />
+    <None Remove="Images\figures\Chess.com\King_Black.png" />
+    <None Remove="Images\figures\Chess.com\King_White.png" />
+    <None Remove="Images\figures\Chess.com\Knight_Black.png" />
+    <None Remove="Images\figures\Chess.com\Knight_White.png" />
+    <None Remove="Images\figures\Chess.com\None.png" />
+    <None Remove="Images\figures\Chess.com\Pawn_Black.png" />
+    <None Remove="Images\figures\Chess.com\Pawn_White.png" />
+    <None Remove="Images\figures\Chess.com\Queen_Black.png" />
+    <None Remove="Images\figures\Chess.com\Queen_White.png" />
+    <None Remove="Images\figures\Chess.com\Rook_Black.png" />
+    <None Remove="Images\figures\Chess.com\Rook_White.png" />
+    <None Remove="Images\figures\King_Black.png" />
+    <None Remove="Images\figures\King_White.png" />
+    <None Remove="Images\figures\Knight_Black.png" />
+    <None Remove="Images\figures\Knight_White.png" />
+    <None Remove="Images\figures\LiChess\Bishop_Black.png" />
+    <None Remove="Images\figures\LiChess\Bishop_White.png" />
+    <None Remove="Images\figures\LiChess\Empty.png" />
+    <None Remove="Images\figures\LiChess\King_Black.png" />
+    <None Remove="Images\figures\LiChess\King_White.png" />
+    <None Remove="Images\figures\LiChess\Knight_Black.png" />
+    <None Remove="Images\figures\LiChess\Knight_White.png" />
+    <None Remove="Images\figures\LiChess\None.png" />
+    <None Remove="Images\figures\LiChess\Pawn_Black.png" />
+    <None Remove="Images\figures\LiChess\Pawn_White.png" />
+    <None Remove="Images\figures\LiChess\Queen_Black.png" />
+    <None Remove="Images\figures\LiChess\Queen_White.png" />
+    <None Remove="Images\figures\LiChess\Rook_Black.png" />
+    <None Remove="Images\figures\LiChess\Rook_White.png" />
+    <None Remove="Images\figures\None.png" />
+    <None Remove="Images\figures\Pawn_Black.png" />
+    <None Remove="Images\figures\Pawn_White.png" />
+    <None Remove="Images\figures\Queen_Black.png" />
+    <None Remove="Images\figures\Queen_White.png" />
+    <None Remove="Images\figures\Rook_Black.png" />
+    <None Remove="Images\figures\Rook_White.png" />
+    <None Remove="Images\icon\icon.png" />
+    <None Remove="phpZC7lK9.png" />
+    <None Remove="Q.png" />
+    <None Remove="View\Pages\caballo-blanco.png" />
+    <None Remove="View\Pages\phpZC7lK9.png" />
+    <None Remove="View\Pages\Q.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\figures\Chess.com\Bishop_White.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\disign\caballo-blanco.png" />
+    <Resource Include="Images\disign\phpZC7lK9.png" />
+    <Resource Include="Images\disign\Q.png" />
+    <Resource Include="Images\figures\Chess.com\Bishop_Black.png" />
+    <Resource Include="Images\figures\Chess.com\Empty.png" />
+    <Resource Include="Images\figures\Chess.com\King_Black.png" />
+    <Resource Include="Images\figures\Chess.com\King_White.png" />
+    <Resource Include="Images\figures\Chess.com\Knight_Black.png" />
+    <Resource Include="Images\figures\Chess.com\Knight_White.png" />
+    <Resource Include="Images\figures\Chess.com\Pawn_Black.png" />
+    <Resource Include="Images\figures\Chess.com\Pawn_White.png" />
+    <Resource Include="Images\figures\Chess.com\Queen_Black.png" />
+    <Resource Include="Images\figures\Chess.com\Queen_White.png" />
+    <Resource Include="Images\figures\Chess.com\Rook_Black.png" />
+    <Resource Include="Images\figures\Chess.com\Rook_White.png" />
+    <Resource Include="Images\figures\LiChess\Bishop_Black.png" />
+    <Resource Include="Images\figures\LiChess\Bishop_White.png" />
+    <Resource Include="Images\figures\LiChess\Empty.png" />
+    <Resource Include="Images\figures\LiChess\King_Black.png" />
+    <Resource Include="Images\figures\LiChess\King_White.png" />
+    <Resource Include="Images\figures\LiChess\Knight_Black.png" />
+    <Resource Include="Images\figures\LiChess\Knight_White.png" />
+    <Resource Include="Images\figures\LiChess\Pawn_Black.png" />
+    <Resource Include="Images\figures\LiChess\Pawn_White.png" />
+    <Resource Include="Images\figures\LiChess\Queen_Black.png" />
+    <Resource Include="Images\figures\LiChess\Queen_White.png">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\figures\LiChess\Rook_Black.png" />
+    <Resource Include="Images\figures\LiChess\Rook_White.png" />
+    <Resource Include="Images\icon\icon.png" />
+  </ItemGroup>
+
+</Project>
