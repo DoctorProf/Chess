@@ -23,6 +23,7 @@ namespace Chess.Constants
         public const string King_Black = ImageFolder + "King_Black.png";
         public const string Rook_White = ImageFolder + "Rook_White.png";
         public const string Rook_Black = ImageFolder + "Rook_Black.png";
+        public const string Point = ImageFolder + "Point.png";
     }
     #endregion
 }

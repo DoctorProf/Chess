@@ -18,15 +18,66 @@ namespace Chess.ViewModels
 {
     internal class Field_ViewModel : ViewModel
     {
-        public Field selectedField;
-        public Field SelectedField { get => selectedField; set => Set(ref selectedField, value); }    
+        public void MoveLogic(Field field, Piece.Color color)
+        {
+            if (field.PieceType != Piece.Type.Empty)
+            {
+                if (field.PieceColor == color)
+                {
+                    // Нет выделенных клеток
+                    if (SelectedField == null)
+                    {
+                        field.Selected = true;
+                        SelectedField = field;
+                    }
+                    else
+                    {
+                        // Текущее поле выделено (Снимаем выделение клик по этой клетке)
+                        if (field == SelectedField)
+                        {
+                            field.Selected = false;
+                            SelectedField = null;
+                        }
+                        else
+                        {
+                            //  Снимаем выделение клик по любой другой клетке
+                            field.Selected = true;
+                            SelectedField.Selected = false;
+                            SelectedField = field;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (selectedField != null)
+                {
+
+                    Field tempField = field.Clone();
+                    field.PieceColor = selectedField.PieceColor;
+                    field.PieceType = selectedField.PieceType;
+                    field.TexturePath = selectedField.TexturePath;
+                    selectedField.PieceColor = tempField.PieceColor;
+                    selectedField.PieceType = tempField.PieceType;
+                    selectedField.TexturePath = tempField.TexturePath;
+                    selectedField.Selected = false;
+                    Move = color == Piece.Color.White?Piece.Color.Black: Piece.Color.White;
+
+                }
+            }
+        }
+        private Field selectedField;
+        public Field SelectedField { get => selectedField; set => Set(ref selectedField, value); }
+
+        private Piece.Color move = Piece.Color.White;
+        public Piece.Color Move { get => move; set => Set(ref move, value); }
 
         public Field_ViewModel()
         {
             Size = "8";
             InitializePieces();
         }
-        ObservableCollection<ObservableCollection<Field>> f = new ();
+        ObservableCollection<ObservableCollection<Field>> f = new();
         public ObservableCollection<ObservableCollection<Field>> F
         {
             get => f;
@@ -51,7 +102,7 @@ namespace Chess.ViewModels
                 {
                     Set(ref size, newSize);
 
-                    DataTable newField = new ();
+                    DataTable newField = new();
                     for (int i = 0; i < newSize; i++)
                         newField.Columns.Add();
 
@@ -68,9 +119,9 @@ namespace Chess.ViewModels
                     f.Clear();
                     for (int i = 0; i < newSize; i++)
                     {
-                        ObservableCollection<Field> fRow = new ();
+                        ObservableCollection<Field> fRow = new();
                         for (int j = 0; j < size; j++)
-                            fRow.Add(new Field() { I = i, J = j , Parent = this, PieceType = Piece.Type.Empty});
+                            fRow.Add(new Field() { I = i, J = j, Parent = this, PieceType = Piece.Type.Empty });
                         f.Add(fRow);
                     }
                 }
@@ -83,7 +134,8 @@ namespace Chess.ViewModels
                         {
                             cell.BackgroundColor = "#eeeed2";
                         }
-                        else {
+                        else
+                        {
                             cell.BackgroundColor = "#769655";
                         }
                     }
@@ -92,8 +144,16 @@ namespace Chess.ViewModels
         }
         public void ClickField(Field field, Field_ViewModel fvm)
         {
-            field.Selected = true;
+            // Если ходят белые
+            if (Move == Piece.Color.White)
+            {
+                MoveLogic(field, Move);
 
+            }
+            else
+            {
+                MoveLogic(field, Move);
+            }
         }
         #region Starting position
         public void InitializePieces()

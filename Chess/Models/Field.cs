@@ -24,8 +24,17 @@ namespace Chess.Models
 
         #region SelectedBackgroundColor
         private string selectedBackgroundColor;
-        public string SelectedBackgroundColor { get => selectedBackgroundColor; set => Set(ref selectedBackgroundColor, value); }
+        public string SelectedBackgroundColor { get {
+                UpdateBackground();
+                return selectedBackgroundColor;
+            }
+            set => Set(ref selectedBackgroundColor, value); }
         #endregion
+
+        public void UpdateBackground() {
+            SelectedBackgroundColor = selected ? "LightGray" : BackgroundColor;
+
+        }
 
         #region PieceType
         private Piece.Type pieceType;
@@ -52,9 +61,11 @@ namespace Chess.Models
 
         #region Selected
         private bool selected;
-        public bool Selected { get => selected; set { Set(ref selected, value);
-                SelectedBackgroundColor = selected ? "LightGreen" : BackgroundColor;
-            } }
+        public bool Selected { get => selected; set {
+                Set(ref selected, value);
+                UpdateBackground();
+            }
+        }
         #endregion
 
         #region I
@@ -66,5 +77,11 @@ namespace Chess.Models
         private int j;
         public int J { get => j; set => Set(ref j, value); }
         #endregion
+
+        public Field Clone()
+        {
+            return new Field() { TexturePath = texturePath, PieceType = pieceType,
+                PieceColor = pieceColor,Parent = parent, I = i, J = j, Selected = selected, BackgroundColor = backgroundColor, SelectedBackgroundColor = selectedBackgroundColor};
+        }
     }
 }

@@ -89,14 +89,9 @@
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Grid>
-                            <Rectangle Fill="{Binding BackgroundColor}"/>
+                            <Rectangle Fill="{Binding SelectedBackgroundColor}"/>
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsFocused" Value="true">
-                                <Setter Property="Background" Value="black" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Button.Template>
                 <Image Source="{Binding TexturePath}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
