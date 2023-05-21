@@ -11,6 +11,7 @@ using Chess.Constants;
 using Chess.ViewModels;
 using System.Windows.Markup.Localizer;
 using System.Windows;
+using System.Configuration;
 
 namespace Chess.Models
 {
@@ -19,6 +20,11 @@ namespace Chess.Models
         #region Background Color
         private string backgroundColor;
         public string BackgroundColor { get => backgroundColor; set => Set(ref backgroundColor, value); }
+        #endregion
+
+        #region SelectedBackgroundColor
+        private string selectedBackgroundColor;
+        public string SelectedBackgroundColor { get => selectedBackgroundColor; set => Set(ref selectedBackgroundColor, value); }
         #endregion
 
         #region PieceType
@@ -41,7 +47,14 @@ namespace Chess.Models
 
         #region Parent
         private Field_ViewModel parent;
-        public Field_ViewModel Parent { get => parent; set => Set(ref parent, value); } 
+        public Field_ViewModel Parent { get => parent; set => Set(ref parent, value); }
+        #endregion
+
+        #region Selected
+        private bool selected;
+        public bool Selected { get => selected; set { Set(ref selected, value);
+                SelectedBackgroundColor = selected ? "LightGreen" : BackgroundColor;
+            } }
         #endregion
 
         #region I

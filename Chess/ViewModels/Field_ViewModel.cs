@@ -12,11 +12,15 @@ using System.Windows.Media;
 using System.ComponentModel;
 using Chess.Constants;
 using System.Windows;
+using Microsoft.Win32;
 
 namespace Chess.ViewModels
 {
     internal class Field_ViewModel : ViewModel
     {
+        public Field selectedField;
+        public Field SelectedField { get => selectedField; set => Set(ref selectedField, value); }    
+
         public Field_ViewModel()
         {
             Size = "8";
@@ -88,7 +92,8 @@ namespace Chess.ViewModels
         }
         public void ClickField(Field field, Field_ViewModel fvm)
         {
-            
+            field.Selected = true;
+
         }
         #region Starting position
         public void InitializePieces()
