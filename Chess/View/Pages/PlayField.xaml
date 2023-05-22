@@ -10,11 +10,47 @@
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="800"
       Title="Field">
-    <Page.DataContext>
-        <vm:Field_ViewModel/>
-    </Page.DataContext>
 
-    <Grid Background = "#2f2e2a">
+    <Page.Resources>
+        <ce:FieldCommand x:Key="FieldCommand"/>
+        <vm:Field_ViewModel x:Key="FieldViewModel"/>
+        <c:FConverter x:Key="FConverter"/>
+        <DataTemplate x:Key="DataTemplate_Level2">
+            <Button Command="{StaticResource FieldCommand}"
+                    Height="50" Width="50" Margin="0" BorderThickness="0"
+                     >
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Rectangle Fill="{Binding SelectedBackgroundColor}"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Button.Template>
+                <Image Source="{Binding TexturePath}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource FConverter}">
+                        <Binding/>
+                        <Binding Source="{StaticResource FieldViewModel}"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+        </DataTemplate>
+        <DataTemplate 
+            x:Key="DataTemplate_Level1">
+            <ItemsControl 
+                ItemsSource="{Binding}" 
+                ItemTemplate="{DynamicResource DataTemplate_Level2}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </DataTemplate>
+    </Page.Resources>
+    <Grid Background = "#2f2e2a"  DataContext="{Binding Source={StaticResource FieldViewModel}}">
         <Border Background="#FF2C1D0D" BorderBrush="Black" BorderThickness="2" Width="450" Height="450">
             <Border.Style>
                 <Style>
@@ -78,44 +114,6 @@
             </Grid>
         </Border>
     </Grid>
-    <Page.Resources>
-        <ce:FieldCommand x:Key="FieldCommand"/>
-        <vm:Field_ViewModel x:Key="FieldViewModal"/>
-        <c:FConverter x:Key="FConverter"/>
-        <DataTemplate x:Key="DataTemplate_Level2">
-            <Button Command="{StaticResource FieldCommand}"
-                    Height="50" Width="50" Margin="0" BorderThickness="0"
-                     >
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Grid>
-                            <Rectangle Fill="{Binding SelectedBackgroundColor}"/>
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Button.Template>
-                <Image Source="{Binding TexturePath}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-                <Button.CommandParameter>
-                    <MultiBinding Converter="{StaticResource FConverter}">
-                        <Binding/>
-                        <Binding Source="{StaticResource FieldViewModal}"/>
-                    </MultiBinding>
-                </Button.CommandParameter>
-            </Button>
-        </DataTemplate>
-        <DataTemplate 
-            x:Key="DataTemplate_Level1">
-            <ItemsControl 
-                ItemsSource="{Binding}" 
-                ItemTemplate="{DynamicResource DataTemplate_Level2}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-        </DataTemplate>
-    </Page.Resources>
 
 </Page>

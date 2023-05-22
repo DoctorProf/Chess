@@ -31,6 +31,7 @@
     <None Remove="Images\figures\Chess.com\None.png" />
     <None Remove="Images\figures\Chess.com\Pawn_Black.png" />
     <None Remove="Images\figures\Chess.com\Pawn_White.png" />
+    <None Remove="Images\figures\Chess.com\point.png" />
     <None Remove="Images\figures\Chess.com\Queen_Black.png" />
     <None Remove="Images\figures\Chess.com\Queen_White.png" />
     <None Remove="Images\figures\Chess.com\Rook_Black.png" />
@@ -84,6 +85,7 @@
     <Resource Include="Images\figures\Chess.com\Knight_White.png" />
     <Resource Include="Images\figures\Chess.com\Pawn_Black.png" />
     <Resource Include="Images\figures\Chess.com\Pawn_White.png" />
+    <Resource Include="Images\figures\Chess.com\point.png" />
     <Resource Include="Images\figures\Chess.com\Queen_Black.png" />
     <Resource Include="Images\figures\Chess.com\Queen_White.png" />
     <Resource Include="Images\figures\Chess.com\Rook_Black.png" />

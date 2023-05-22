@@ -18,80 +18,34 @@ namespace Chess.ViewModels
 {
     internal class Field_ViewModel : ViewModel
     {
-        public void MoveLogic(Field field, Piece.Color color)
+        public Field_ViewModel()
         {
-            if (field.PieceType != Piece.Type.Empty)
-            {
-                if (field.PieceColor == color)
-                {
-                    // Нет выделенных клеток
-                    if (SelectedField == null)
-                    {
-                        field.Selected = true;
-                        SelectedField = field;
-                    }
-                    else
-                    {
-                        // Текущее поле выделено (Снимаем выделение клик по этой клетке)
-                        if (field == SelectedField)
-                        {
-                            field.Selected = false;
-                            SelectedField = null;
-                        }
-                        else
-                        {
-                            //  Снимаем выделение клик по любой другой клетке
-                            field.Selected = true;
-                            SelectedField.Selected = false;
-                            SelectedField = field;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                if (selectedField != null)
-                {
-
-                    Field tempField = field.Clone();
-                    field.PieceColor = selectedField.PieceColor;
-                    field.PieceType = selectedField.PieceType;
-                    field.TexturePath = selectedField.TexturePath;
-                    selectedField.PieceColor = tempField.PieceColor;
-                    selectedField.PieceType = tempField.PieceType;
-                    selectedField.TexturePath = tempField.TexturePath;
-                    selectedField.Selected = false;
-                    Move = color == Piece.Color.White?Piece.Color.Black: Piece.Color.White;
-
-                }
-            }
+            Size = "8";
+            InitializePieces();
         }
+        #region Properties
         private Field selectedField;
         public Field SelectedField { get => selectedField; set => Set(ref selectedField, value); }
 
         private Piece.Color move = Piece.Color.White;
         public Piece.Color Move { get => move; set => Set(ref move, value); }
 
-        public Field_ViewModel()
-        {
-            Size = "8";
-            InitializePieces();
-        }
+
         ObservableCollection<ObservableCollection<Field>> f = new();
         public ObservableCollection<ObservableCollection<Field>> F
         {
             get => f;
             set => Set(ref f, value);
         }
-
-
         DataTable field;
         public DataTable Field
         {
             get => field;
             set => Set(ref field, value);
         }
+        #endregion
 
+        #region PropertyGenerateField
         int size = 0;
         public string Size
         {
@@ -121,7 +75,7 @@ namespace Chess.ViewModels
                     {
                         ObservableCollection<Field> fRow = new();
                         for (int j = 0; j < size; j++)
-                            fRow.Add(new Field() { I = i, J = j, Parent = this, PieceType = Piece.Type.Empty });
+                            fRow.Add(new Field() { I = i, J = j, PieceType = Piece.Type.Empty });
                         f.Add(fRow);
                     }
                 }
@@ -141,6 +95,54 @@ namespace Chess.ViewModels
                     }
                 }
             }
+        }
+        #endregion
+
+        public static void ClearPoints(Field_ViewModel fvm)
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    if (fvm.F[i][j].TexturePath == TexturesPaths.Point) fvm.F[i][j].TexturePath = TexturesPaths.Empty;
+                }
+            }
+        }
+        public void ClearSelected()
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    F[i][j].Selected = false;
+                }
+            }
+        }
+        public void CheckSelected(Field field, Field SelectedField, int i, int j)
+        {
+            if (field == SelectedField && SelectedField != null)
+            {
+                // Текущее поле выделено (Снимаем выделение клик по этой клетке)
+                field.Selected = false;
+                SelectedField = null;
+            }
+            else
+            {
+                //  Снимаем выделение клик по любой другой клетке
+                field.Selected = true;
+                SelectedField.Selected = false;
+                SelectedField = field;
+            }
+        }
+
+        public void SetPoint(int i, int j)
+        {
+            if (F[i][j].PieceType == Piece.Type.Empty) F[i][j].TexturePath = TexturesPaths.Point;
+        }
+
+        public void MoveLogic(Field field, Piece.Color color)
+        {
+
         }
         public void ClickField(Field field, Field_ViewModel fvm)
         {

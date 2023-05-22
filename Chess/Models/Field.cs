@@ -54,11 +54,6 @@ namespace Chess.Models
         } }
         #endregion
 
-        #region Parent
-        private Field_ViewModel parent;
-        public Field_ViewModel Parent { get => parent; set => Set(ref parent, value); }
-        #endregion
-
         #region Selected
         private bool selected;
         public bool Selected { get => selected; set {
@@ -81,7 +76,7 @@ namespace Chess.Models
         public Field Clone()
         {
             return new Field() { TexturePath = texturePath, PieceType = pieceType,
-                PieceColor = pieceColor,Parent = parent, I = i, J = j, Selected = selected, BackgroundColor = backgroundColor, SelectedBackgroundColor = selectedBackgroundColor};
+                PieceColor = pieceColor, I = i, J = j, Selected = selected, BackgroundColor = backgroundColor, SelectedBackgroundColor = selectedBackgroundColor};
         }
     }
 }

@@ -22,8 +22,11 @@ namespace Chess.Commands
         {
             object[] parameters = parameter as object[];
             Field field = parameters[0] as Field;
-            Field_ViewModel fvm = field.Parent;
-            fvm.ClickField(field, fvm);
+            Field_ViewModel fvm = parameters[1] as Field_ViewModel;
+            if (field != null)
+            {
+                fvm.ClickField(field, fvm);
+            }
         }
     }
 }
