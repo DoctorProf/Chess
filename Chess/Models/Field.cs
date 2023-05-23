@@ -29,12 +29,13 @@ namespace Chess.Models
                 return selectedBackgroundColor;
             }
             set => Set(ref selectedBackgroundColor, value); }
-        #endregion
+        
 
         public void UpdateBackground() {
             SelectedBackgroundColor = selected ? "LightGray" : BackgroundColor;
 
         }
+        #endregion
 
         #region PieceType
         private Piece.Type pieceType;
@@ -73,10 +74,12 @@ namespace Chess.Models
         public int J { get => j; set => Set(ref j, value); }
         #endregion
 
+        #region Clone
         public Field Clone()
         {
             return new Field() { TexturePath = texturePath, PieceType = pieceType,
                 PieceColor = pieceColor, I = i, J = j, Selected = selected, BackgroundColor = backgroundColor, SelectedBackgroundColor = selectedBackgroundColor};
         }
+        #endregion
     }
 }

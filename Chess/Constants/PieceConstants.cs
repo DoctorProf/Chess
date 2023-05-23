@@ -25,7 +25,8 @@ namespace Chess.Constants
         public enum Color
         {
             White,
-            Black
+            Black,
+            Empty
         }
         #endregion
     }
