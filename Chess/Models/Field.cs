@@ -24,25 +24,54 @@ namespace Chess.Models
 
         #region SelectedBackgroundColor
         private string selectedBackgroundColor;
-        public string SelectedBackgroundColor { get {
+        public string SelectedBackgroundColor {
+            get {
                 UpdateBackground();
                 return selectedBackgroundColor;
             }
-            set => Set(ref selectedBackgroundColor, value); }
+            set => Set(ref selectedBackgroundColor, value);
+        
+        }
         public void UpdateBackground() {
             SelectedBackgroundColor = selected ? "LightGray" : BackgroundColor;
 
         }
+        public void UpdateTexture()
+        {
+            if (PieceType != Piece.Type.Empty && PieceColor != Piece.Color.Empty)
+            {
+                TexturePath = TexturesPaths.ImageFolder + pieceType.ToString() + "_" + pieceColor.ToString()+".png";
+            } else
+            {
+                TexturePath = TexturesPaths.Empty;
+            }
+        }
         #endregion
 
         #region PieceType
-        private Piece.Type pieceType;
-        public Piece.Type PieceType { get => pieceType; set => Set(ref pieceType, value); }
+        private Piece.Type pieceType = Piece.Type.Empty;
+        public Piece.Type PieceType
+        {
+            get => pieceType;
+            set
+            {
+                Set(ref pieceType, value);
+                UpdateTexture();
+            }
+        }
         #endregion
 
         #region PieceColor
-        private Piece.Color pieceColor;
-        public Piece.Color PieceColor { get => pieceColor; set => Set(ref pieceColor, value); }
+        private Piece.Color pieceColor = Piece.Color.Empty;
+        public Piece.Color PieceColor
+        {
+            get => pieceColor; 
+            set
+            {
+                Set(ref pieceColor, value);
+                UpdateTexture();
+            }
+        }
         #endregion
 
         #region TexturePath
@@ -52,6 +81,9 @@ namespace Chess.Models
                 Set(ref texturePath, value);
         } }
         #endregion
+
+        private string circleTexture = TexturesPaths.Empty;
+        public string CircleTexture { get => circleTexture; set => Set(ref circleTexture, value); }
 
         #region Selected
         private bool selected;

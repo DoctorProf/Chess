@@ -76,7 +76,7 @@ namespace Chess.ViewModels
                     {
                         ObservableCollection<Field> fRow = new();
                         for (int j = 0; j < size; j++)
-                            fRow.Add(new Field() { I = i, J = j, PieceType = Piece.Type.Empty, PieceColor = Piece.Color.Empty, TexturePath = TexturesPaths.Empty });
+                            fRow.Add(new Field() { I = i, J = j });
                         f.Add(fRow);
                     }
                 }
@@ -106,7 +106,6 @@ namespace Chess.ViewModels
                 {
                     if (F[i][j].TexturePath == TexturesPaths.Point)
                     {
-                        F[i][j].TexturePath = TexturesPaths.Empty;
                         F[i][j].PieceType = Piece.Type.Empty;
                         F[i][j].PieceColor = Piece.Color.Empty;
                     }
@@ -119,11 +118,9 @@ namespace Chess.ViewModels
             {
                 for (int j = 0; j < 8; j++)
                 {
-                    if (F[i][j].TexturePath == TexturesPaths.Circle)
+                    if (F[i][j].CircleTexture == TexturesPaths.Circle)
                     {
-                        F[i][j].TexturePath = TexturesPaths.Empty;
-                        F[i][j].PieceType = Piece.Type.Empty;
-                        F[i][j].PieceColor = Piece.Color.Empty;
+                        F[i][j].CircleTexture = TexturesPaths.Empty;
                     }
                 }
             }
@@ -139,32 +136,86 @@ namespace Chess.ViewModels
         {
             if (((i >= 0 & i <= 7) & (j >= 0 & j <= 7)) && F[i][j].PieceType != Piece.Type.Empty & Move != F[i][j].PieceColor)
             {
-                F[i][j].TexturePath = TexturesPaths.Circle;
+                F[i][j].CircleTexture = TexturesPaths.Circle;
             }
         }
-        public void SetPointKnight(int a)
+        public void PawnOnQueen(Field field)
         {
-            SetPoint(SelectedField.I + a * -2, SelectedField.J + a * -1);
-            SetPoint(SelectedField.I + a * -2, SelectedField.J + a * 1);
-            SetPoint(SelectedField.I + a * -1, SelectedField.J + a * 2);
-            SetPoint(SelectedField.I + a * 1, SelectedField.J + a * 2);
-            SetPoint(SelectedField.I + a * 2, SelectedField.J + a * 1);
-            SetPoint(SelectedField.I + a * 2, SelectedField.J + a * -1);
-            SetPoint(SelectedField.I + a * 1, SelectedField.J + a * -2);
-            SetPoint(SelectedField.I + a * -1, SelectedField.J + a * -2);
+            if ((field.I == 0 || field.I == 7) & SelectedField.PieceType == Piece.Type.Pawn)
+            {
+                field.PieceType = Piece.Type.Queen;
+            }
         }
-        public void SetPointKing()
+        public void KickANdWalkKnight(int checkposi, int checkposj)
         {
-            SetPoint(SelectedField.I - 1, SelectedField.J);
-            SetPoint(SelectedField.I - 1, SelectedField.J + 1);
-            SetPoint(SelectedField.I, SelectedField.J + 1);
-            SetPoint(SelectedField.I + 1, SelectedField.J + 1);
-            SetPoint(SelectedField.I + 1, SelectedField.J);
-            SetPoint(SelectedField.I + 1, SelectedField.J - 1);
-            SetPoint(SelectedField.I, SelectedField.J - 1);
-            SetPoint(SelectedField.I - 1, SelectedField.J - 1);
+            if (CheckOnBoard(checkposi, checkposj))
+            {
+                if (F[checkposi][checkposj].PieceType != Piece.Type.Empty)
+                {
+                    SetCircle(checkposi, checkposj);
+                }
+                else
+                {
+                    SetPoint(checkposi, checkposj);
+                }
+            }
         }
-        public bool CheckOnBoard(int i, int j)
+        public void KickANdWalkKing(int checkposi, int checkposj)
+        {
+            if (CheckOnBoard(checkposi, checkposj))
+            {
+                if (F[checkposi][checkposj].PieceType != Piece.Type.Empty)
+                {
+                    SetCircle(checkposi, checkposj);
+                }
+                else
+                {
+                    SetPoint(checkposi, checkposj);
+                }
+            }
+        }
+        public void AllKnight(int a)
+        {
+            int checkposi = SelectedField.I + a * -2;
+            int checkposi1 = SelectedField.I + a * -1;
+            int checkposi2 = SelectedField.I + a * 1;
+            int checkposi3 = SelectedField.I + a * 2;
+
+            int checkposj = SelectedField.J + a * -1;
+            int checkposj1 = SelectedField.J + a * 1;
+            int checkposj2 = SelectedField.J + a * 2;
+            int checkposj3 = SelectedField.J + a * -2;
+
+            KickANdWalkKnight(checkposi, checkposj);
+            KickANdWalkKnight(checkposi, checkposj1);
+            KickANdWalkKnight(checkposi1, checkposj2);
+            KickANdWalkKnight(checkposi2, checkposj2);
+            KickANdWalkKnight(checkposi3, checkposj1);
+            KickANdWalkKnight(checkposi3, checkposj);
+            KickANdWalkKnight(checkposi2, checkposj3);
+            KickANdWalkKnight(checkposi1, checkposj3);
+
+        }
+        public void AllKing()
+        {
+            int checkposi = SelectedField.I;
+            int checkposi1 = SelectedField.I + 1;
+            int checkposi2 = SelectedField.I - 1;
+
+            int checkposj = SelectedField.J;
+            int checkposj1 = SelectedField.J + 1;
+            int checkposj2 = SelectedField.J - 1;
+
+            KickANdWalkKing(checkposi2, checkposj);
+            KickANdWalkKing(checkposi2, checkposj1);
+            KickANdWalkKing(checkposi, checkposj1);
+            KickANdWalkKing(checkposi1, checkposj1);
+            KickANdWalkKing(checkposi1, checkposj);
+            KickANdWalkKing(checkposi1, checkposj2);
+            KickANdWalkKing(checkposi, checkposj2);
+            KickANdWalkKing(checkposi2, checkposj2);
+        }
+        public static bool CheckOnBoard(int i, int j)
         {
             return i >= 0 && i < 8 && j >= 0 && j < 8;
         }
@@ -176,12 +227,17 @@ namespace Chess.ViewModels
                 int checkposi = SelectedField.I - 1 * a * i;
                 int checkposj = SelectedField.J - 1 * a * i;
 
-                if (CheckOnBoard(checkposi, checkposj)) {
+                if (CheckOnBoard(checkposi, checkposj))
+                {
                     if (F[checkposi][checkposj].PieceType == Piece.Type.Empty)
                     {
                         SetPoint(checkposi, checkposj);
+                    } 
+                    else
+                    {
+                        SetCircle(checkposi, checkposj);
+                        break;
                     }
-                    else break;
                 }
                 else break;
             }
@@ -196,8 +252,12 @@ namespace Chess.ViewModels
                     if (F[checkposi][checkposj].PieceType == Piece.Type.Empty)
                     {
                         SetPoint(checkposi, checkposj);
-                    } 
-                    else break;
+                    }
+                    else
+                    {
+                        SetCircle(checkposi, checkposj);
+                        break;
+                    }
                 }
                 else break;
             }
@@ -213,7 +273,11 @@ namespace Chess.ViewModels
                     {
                         SetPoint(checkposi, checkposj);
                     }
-                    else break;
+                    else
+                    {
+                        SetCircle(checkposi, checkposj);
+                        break;
+                    }
                 }
                 else break;
             }
@@ -229,7 +293,11 @@ namespace Chess.ViewModels
                     {
                         SetPoint(checkposi, checkposj);
                     }
-                    else break;
+                    else
+                    {
+                        SetCircle(checkposi, checkposj);
+                        break;
+                    }
                 }
                 else break;
 
@@ -249,7 +317,11 @@ namespace Chess.ViewModels
                     {
                         SetPoint(checkposi, checkposj);
                     }
-                    else break;
+                    else
+                    {
+                        SetCircle(checkposi, checkposj);
+                        break;
+                    }
                 }
                 else break;
             }
@@ -265,7 +337,11 @@ namespace Chess.ViewModels
                     {
                         SetPoint(checkposi, checkposj);
                     }
-                    else break;
+                    else
+                    {
+                        SetCircle(checkposi, checkposj);
+                        break;
+                    }
                 }
                 else break;
             }
@@ -281,7 +357,11 @@ namespace Chess.ViewModels
                     {
                         SetPoint(checkposi, checkposj);
                     }
-                    else break;
+                    else
+                    {
+                        SetCircle(checkposi, checkposj);
+                        break;
+                    }
                 }
                 else break;
             }
@@ -297,13 +377,17 @@ namespace Chess.ViewModels
                     {
                         SetPoint(checkposi, checkposj);
                     }
-                    else break;
+                    else
+                    {
+                        SetCircle(checkposi, checkposj);
+                        break;
+                    }
                 }
                 else break;
 
             }
         }
-        public void KickPawn(int a) 
+        public void KickPawn(int a)
         {
             int checkposi = SelectedField.I - 1 * a;
             int checkposj = SelectedField.J + 1 * a;
@@ -323,7 +407,7 @@ namespace Chess.ViewModels
                 }
             }
         }
-        public void SetAllPoints() 
+        public void SetAllPoints()
         {
             switch (SelectedField.PieceType)
             {
@@ -334,8 +418,8 @@ namespace Chess.ViewModels
                         SetPoint(SelectedField.I - 1, SelectedField.J);
                         if (SelectedField.I == 6) SetPoint(SelectedField.I - 2, SelectedField.J);
                         KickPawn(1);
-                        
-                        
+
+
                     }
                     else if (SelectedField.PieceColor == Piece.Color.Black)
                     {
@@ -348,11 +432,11 @@ namespace Chess.ViewModels
 
                     if (SelectedField.PieceColor == Piece.Color.White)
                     {
-                        SetPointKnight(1);
+                        AllKnight(1);
                     }
                     else if (SelectedField.PieceColor == Piece.Color.Black)
                     {
-                        SetPointKnight(-1);
+                        AllKnight(-1);
                     }
                     break;
                 case Piece.Type.Bishop:
@@ -380,11 +464,11 @@ namespace Chess.ViewModels
                 case Piece.Type.King:
                     if (SelectedField.PieceColor == Piece.Color.White)
                     {
-                        SetPointKing();
+                        AllKing();
                     }
                     else if (SelectedField.PieceColor == Piece.Color.Black)
                     {
-                        SetPointKing();
+                        AllKing();
                     }
                     break;
                 case Piece.Type.Queen:
@@ -446,28 +530,24 @@ namespace Chess.ViewModels
                         field.PieceColor = SelectedField.PieceColor;
                         field.PieceType = SelectedField.PieceType;
                         field.TexturePath = SelectedField.TexturePath;
+
+                        PawnOnQueen(field);
+
                         SelectedField.PieceColor = tempField.PieceColor;
                         SelectedField.PieceType = tempField.PieceType;
                         SelectedField.TexturePath = tempField.TexturePath;
-                        /*
-                        if ((field.I == 0 || field.I == 7) & SelectedField.PieceType == Piece.Type.Pawn)
-                        {
-                            field.PieceColor = Move;
-                            field.PieceType = Piece.Type.Queen;
-                            field.TexturePath = TexturesPaths.Queen_Black;
-                        }
-                        */
                         SelectedField.Selected = false;
                         SelectedField = null;
                         ClearPoints();
-                        ClearCircle(); 
+                        ClearCircle();
                         Move = color == Piece.Color.White ? Piece.Color.Black : Piece.Color.White;
-                    } 
-                     else if (field.TexturePath == TexturesPaths.Circle)
+                    }
+                    else if (field.CircleTexture == TexturesPaths.Circle)
                     {
                         field.PieceColor = SelectedField.PieceColor;
                         field.PieceType = SelectedField.PieceType;
                         field.TexturePath = SelectedField.TexturePath;
+                        PawnOnQueen(field);
                         SelectedField.PieceColor = Piece.Color.Empty;
                         SelectedField.PieceType = Piece.Type.Empty;
                         SelectedField.TexturePath = TexturesPaths.Empty;
@@ -477,7 +557,7 @@ namespace Chess.ViewModels
                         ClearCircle();
                         Move = color == Piece.Color.White ? Piece.Color.Black : Piece.Color.White;
                     }
-                } 
+                }
             }
         }
         public void ClickField(Field field, Field_ViewModel fvm)
@@ -500,41 +580,32 @@ namespace Chess.ViewModels
             // Черные фигуры
             f[0][0].PieceType = Piece.Type.Rook;
             f[0][0].PieceColor = Piece.Color.Black;
-            f[0][0].TexturePath = TexturesPaths.Rook_Black;
 
             f[0][1].PieceType = Piece.Type.Knight;
             f[0][1].PieceColor = Piece.Color.Black;
-            f[0][1].TexturePath = TexturesPaths.Knight_Black;
 
             f[0][2].PieceType = Piece.Type.Bishop;
             f[0][2].PieceColor = Piece.Color.Black;
-            f[0][2].TexturePath = TexturesPaths.Bishop_Black;
 
             f[0][3].PieceType = Piece.Type.Queen;
             f[0][3].PieceColor = Piece.Color.Black;
-            f[0][3].TexturePath = TexturesPaths.Queen_Black;
 
             f[0][4].PieceType = Piece.Type.King;
             f[0][4].PieceColor = Piece.Color.Black;
-            f[0][4].TexturePath = TexturesPaths.King_Black;
 
             f[0][5].PieceType = Piece.Type.Bishop;
             f[0][5].PieceColor = Piece.Color.Black;
-            f[0][5].TexturePath = TexturesPaths.Bishop_Black;
 
             f[0][6].PieceType = Piece.Type.Knight;
             f[0][6].PieceColor = Piece.Color.Black;
-            f[0][6].TexturePath = TexturesPaths.Knight_Black;
 
             f[0][7].PieceType = Piece.Type.Rook;
             f[0][7].PieceColor = Piece.Color.Black;
-            f[0][7].TexturePath = TexturesPaths.Rook_Black;
 
             for (int i = 0; i < 8; i++)
             {
                 f[1][i].PieceType = Piece.Type.Pawn;
                 f[1][i].PieceColor = Piece.Color.Black;
-                f[1][i].TexturePath = TexturesPaths.Pawn_Black;
             }
             #endregion
 
@@ -542,49 +613,32 @@ namespace Chess.ViewModels
             // Белые
             f[7][0].PieceType = Piece.Type.Rook;
             f[7][0].PieceColor = Piece.Color.White;
-            f[7][0].TexturePath = TexturesPaths.Rook_White;
 
             f[7][1].PieceType = Piece.Type.Knight;
             f[7][1].PieceColor = Piece.Color.White;
-            f[7][1].TexturePath = TexturesPaths.Knight_White;
-
 
             f[7][2].PieceType = Piece.Type.Bishop;
             f[7][2].PieceColor = Piece.Color.White;
-            f[7][2].TexturePath = TexturesPaths.Bishop_White;
-
 
             f[7][3].PieceType = Piece.Type.Queen;
             f[7][3].PieceColor = Piece.Color.White;
-            f[7][3].TexturePath = TexturesPaths.Queen_White;
-
 
             f[7][4].PieceType = Piece.Type.King;
             f[7][4].PieceColor = Piece.Color.White;
-            f[7][4].TexturePath = TexturesPaths.King_White;
-
 
             f[7][5].PieceType = Piece.Type.Bishop;
             f[7][5].PieceColor = Piece.Color.White;
-            f[7][5].TexturePath = TexturesPaths.Bishop_White;
-
 
             f[7][6].PieceType = Piece.Type.Knight;
             f[7][6].PieceColor = Piece.Color.White;
-            f[7][6].TexturePath = TexturesPaths.Knight_White;
-
 
             f[7][7].PieceType = Piece.Type.Rook;
             f[7][7].PieceColor = Piece.Color.White;
-            f[7][7].TexturePath = TexturesPaths.Rook_White;
-
 
             for (int i = 0; i < 8; i++)
             {
                 f[6][i].PieceType = Piece.Type.Pawn;
                 f[6][i].PieceColor = Piece.Color.White;
-                f[6][i].TexturePath = TexturesPaths.Pawn_White;
-
             }
             #endregion
         }

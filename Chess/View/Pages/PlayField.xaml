@@ -27,7 +27,11 @@
                         </Grid>
                     </ControlTemplate>
                 </Button.Template>
-                <Image Source="{Binding TexturePath}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Grid>
+                     <Image Source="{Binding TexturePath}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Image Source="{Binding CircleTexture}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                </Grid>
                 <Button.CommandParameter>
                     <MultiBinding Converter="{StaticResource FConverter}">
                         <Binding/>
@@ -50,7 +54,7 @@
         </DataTemplate>
     </Page.Resources>
     <Grid Background = "#2f2e2a"  DataContext="{Binding Source={StaticResource FieldViewModel}}">
-        <Label Content="{Binding Move}"/>
+        <Label Foreground ="White" FontSize="24" Content="{Binding Move}"/>
         <Border Background="#FF2C1D0D" BorderBrush="Black" BorderThickness="2" Width="450" Height="450">
             <Border.Style>
                 <Style>
