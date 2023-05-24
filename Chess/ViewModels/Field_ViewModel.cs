@@ -46,6 +46,7 @@ namespace Chess.ViewModels
             set => Set(ref field, value);
         }
         #endregion
+
         #region PropertyGenerateField
         int size = 0;
         public string Size
@@ -98,6 +99,8 @@ namespace Chess.ViewModels
             }
         }
         #endregion
+
+        #region Clear and Set (Points And Circle)
         public void ClearPoints()
         {
             for (int i = 0; i < 8; i++)
@@ -139,6 +142,7 @@ namespace Chess.ViewModels
                 F[i][j].CircleTexture = TexturesPaths.Circle;
             }
         }
+        #endregion
         public void PawnOnQueen(Field field)
         {
             if ((field.I == 0 || field.I == 7) & SelectedField.PieceType == Piece.Type.Pawn)
@@ -146,6 +150,7 @@ namespace Chess.ViewModels
                 field.PieceType = Piece.Type.Queen;
             }
         }
+        #region KickANdWalk Knight and King
         public void KickANdWalkKnight(int checkposi, int checkposj)
         {
             if (CheckOnBoard(checkposi, checkposj))
@@ -174,6 +179,7 @@ namespace Chess.ViewModels
                 }
             }
         }
+        
         public void AllKnight(int a)
         {
             int checkposi = SelectedField.I + a * -2;
@@ -215,10 +221,12 @@ namespace Chess.ViewModels
             KickANdWalkKing(checkposi, checkposj2);
             KickANdWalkKing(checkposi2, checkposj2);
         }
+        #endregion
         public static bool CheckOnBoard(int i, int j)
         {
             return i >= 0 && i < 8 && j >= 0 && j < 8;
         }
+        #region SetPoint Bishop and Rook
         public void SetPointBishop(int a)
         {
             for (int i = 1; i <= 7; i++)
@@ -387,6 +395,7 @@ namespace Chess.ViewModels
 
             }
         }
+        #endregion
         public void KickPawn(int a)
         {
             int checkposi = SelectedField.I - 1 * a;
