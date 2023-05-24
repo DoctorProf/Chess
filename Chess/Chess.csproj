@@ -9,9 +9,13 @@
 
   <ItemGroup>
     <Compile Remove="Images\figures\Chesscom\**" />
+    <Compile Remove="Images\figures\LiChess\**" />
     <EmbeddedResource Remove="Images\figures\Chesscom\**" />
+    <EmbeddedResource Remove="Images\figures\LiChess\**" />
     <None Remove="Images\figures\Chesscom\**" />
+    <None Remove="Images\figures\LiChess\**" />
     <Page Remove="Images\figures\Chesscom\**" />
+    <Page Remove="Images\figures\LiChess\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +27,7 @@
     <None Remove="Images\figures\Bishop_White.png" />
     <None Remove="Images\figures\Chess.com\Bishop_Black.png" />
     <None Remove="Images\figures\Chess.com\Bishop_White.png" />
+    <None Remove="Images\figures\Chess.com\Circle.png" />
     <None Remove="Images\figures\Chess.com\Empty.png" />
     <None Remove="Images\figures\Chess.com\King_Black.png" />
     <None Remove="Images\figures\Chess.com\King_White.png" />
@@ -40,20 +45,6 @@
     <None Remove="Images\figures\King_White.png" />
     <None Remove="Images\figures\Knight_Black.png" />
     <None Remove="Images\figures\Knight_White.png" />
-    <None Remove="Images\figures\LiChess\Bishop_Black.png" />
-    <None Remove="Images\figures\LiChess\Bishop_White.png" />
-    <None Remove="Images\figures\LiChess\Empty.png" />
-    <None Remove="Images\figures\LiChess\King_Black.png" />
-    <None Remove="Images\figures\LiChess\King_White.png" />
-    <None Remove="Images\figures\LiChess\Knight_Black.png" />
-    <None Remove="Images\figures\LiChess\Knight_White.png" />
-    <None Remove="Images\figures\LiChess\None.png" />
-    <None Remove="Images\figures\LiChess\Pawn_Black.png" />
-    <None Remove="Images\figures\LiChess\Pawn_White.png" />
-    <None Remove="Images\figures\LiChess\Queen_Black.png" />
-    <None Remove="Images\figures\LiChess\Queen_White.png" />
-    <None Remove="Images\figures\LiChess\Rook_Black.png" />
-    <None Remove="Images\figures\LiChess\Rook_White.png" />
     <None Remove="Images\figures\None.png" />
     <None Remove="Images\figures\Pawn_Black.png" />
     <None Remove="Images\figures\Pawn_White.png" />
@@ -78,6 +69,7 @@
     <Resource Include="Images\disign\phpZC7lK9.png" />
     <Resource Include="Images\disign\Q.png" />
     <Resource Include="Images\figures\Chess.com\Bishop_Black.png" />
+    <Resource Include="Images\figures\Chess.com\Circle.png" />
     <Resource Include="Images\figures\Chess.com\Empty.png" />
     <Resource Include="Images\figures\Chess.com\King_Black.png" />
     <Resource Include="Images\figures\Chess.com\King_White.png" />
@@ -90,21 +82,6 @@
     <Resource Include="Images\figures\Chess.com\Queen_White.png" />
     <Resource Include="Images\figures\Chess.com\Rook_Black.png" />
     <Resource Include="Images\figures\Chess.com\Rook_White.png" />
-    <Resource Include="Images\figures\LiChess\Bishop_Black.png" />
-    <Resource Include="Images\figures\LiChess\Bishop_White.png" />
-    <Resource Include="Images\figures\LiChess\Empty.png" />
-    <Resource Include="Images\figures\LiChess\King_Black.png" />
-    <Resource Include="Images\figures\LiChess\King_White.png" />
-    <Resource Include="Images\figures\LiChess\Knight_Black.png" />
-    <Resource Include="Images\figures\LiChess\Knight_White.png" />
-    <Resource Include="Images\figures\LiChess\Pawn_Black.png" />
-    <Resource Include="Images\figures\LiChess\Pawn_White.png" />
-    <Resource Include="Images\figures\LiChess\Queen_Black.png" />
-    <Resource Include="Images\figures\LiChess\Queen_White.png">
-      <CopyToOutputDirectory></CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\figures\LiChess\Rook_Black.png" />
-    <Resource Include="Images\figures\LiChess\Rook_White.png" />
     <Resource Include="Images\icon\icon.png" />
   </ItemGroup>
 

@@ -29,8 +29,6 @@ namespace Chess.Models
                 return selectedBackgroundColor;
             }
             set => Set(ref selectedBackgroundColor, value); }
-        
-
         public void UpdateBackground() {
             SelectedBackgroundColor = selected ? "LightGray" : BackgroundColor;
 
