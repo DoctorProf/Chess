@@ -82,8 +82,10 @@ namespace Chess.Models
         } }
         #endregion
 
+        #region CircleTexture
         private string circleTexture = TexturesPaths.Empty;
         public string CircleTexture { get => circleTexture; set => Set(ref circleTexture, value); }
+        #endregion
 
         #region Selected
         private bool selected;
@@ -92,6 +94,16 @@ namespace Chess.Models
                 UpdateBackground();
             }
         }
+        #endregion
+
+        #region Defended
+        private bool defended = false;
+        public bool Defended { get => defended; set => Set(ref  defended, value); }
+        #endregion
+
+        #region King Move
+        private int kingMove;
+        public int KingMove { get => kingMove; set => Set(ref kingMove, value); }
         #endregion
 
         #region I

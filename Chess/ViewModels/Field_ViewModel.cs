@@ -155,7 +155,7 @@ namespace Chess.ViewModels
         {
             if (CheckOnBoard(checkposi, checkposj))
             {
-                if (F[checkposi][checkposj].PieceType != Piece.Type.Empty)
+                if (F[checkposi][checkposj].PieceType != Piece.Type.Empty & F[checkposi][checkposj].PieceType != Piece.Type.King)
                 {
                     SetCircle(checkposi, checkposj);
                 }
@@ -169,7 +169,7 @@ namespace Chess.ViewModels
         {
             if (CheckOnBoard(checkposi, checkposj))
             {
-                if (F[checkposi][checkposj].PieceType != Piece.Type.Empty)
+                if (F[checkposi][checkposj].PieceType != Piece.Type.Empty & F[checkposi][checkposj].PieceType != Piece.Type.King)
                 {
                     SetCircle(checkposi, checkposj);
                 }
@@ -237,14 +237,18 @@ namespace Chess.ViewModels
 
                 if (CheckOnBoard(checkposi, checkposj))
                 {
-                    if (F[checkposi][checkposj].PieceType == Piece.Type.Empty)
-                    {
-                        SetPoint(checkposi, checkposj);
-                    } 
-                    else
+                    if (F[checkposi][checkposj].PieceType != Piece.Type.Empty & F[checkposi][checkposj].PieceType != Piece.Type.King)
                     {
                         SetCircle(checkposi, checkposj);
                         break;
+                    }
+                    else
+                    {
+                        if (F[checkposi][checkposj].PieceType == Piece.Type.King)
+                        {
+                            break;
+                        }
+                        SetPoint(checkposi, checkposj);
                     }
                 }
                 else break;
@@ -257,14 +261,18 @@ namespace Chess.ViewModels
 
                 if (CheckOnBoard(checkposi, checkposj))
                 {
-                    if (F[checkposi][checkposj].PieceType == Piece.Type.Empty)
-                    {
-                        SetPoint(checkposi, checkposj);
-                    }
-                    else
+                    if (F[checkposi][checkposj].PieceType != Piece.Type.Empty & F[checkposi][checkposj].PieceType != Piece.Type.King)
                     {
                         SetCircle(checkposi, checkposj);
                         break;
+                    }
+                    else
+                    {
+                        if (F[checkposi][checkposj].PieceType == Piece.Type.King)
+                        {
+                            break;
+                        }
+                        SetPoint(checkposi, checkposj);
                     }
                 }
                 else break;
@@ -277,14 +285,18 @@ namespace Chess.ViewModels
 
                 if (CheckOnBoard(checkposi, checkposj))
                 {
-                    if (F[checkposi][checkposj].PieceType == Piece.Type.Empty)
-                    {
-                        SetPoint(checkposi, checkposj);
-                    }
-                    else
+                    if (F[checkposi][checkposj].PieceType != Piece.Type.Empty & F[checkposi][checkposj].PieceType != Piece.Type.King)
                     {
                         SetCircle(checkposi, checkposj);
                         break;
+                    }
+                    else
+                    {
+                        if (F[checkposi][checkposj].PieceType == Piece.Type.King)
+                        {
+                            break;
+                        }
+                        SetPoint(checkposi, checkposj);
                     }
                 }
                 else break;
@@ -297,14 +309,18 @@ namespace Chess.ViewModels
 
                 if (CheckOnBoard(checkposi, checkposj))
                 {
-                    if (F[checkposi][checkposj].PieceType == Piece.Type.Empty)
-                    {
-                        SetPoint(checkposi, checkposj);
-                    }
-                    else
+                    if (F[checkposi][checkposj].PieceType != Piece.Type.Empty & F[checkposi][checkposj].PieceType != Piece.Type.King)
                     {
                         SetCircle(checkposi, checkposj);
                         break;
+                    }
+                    else
+                    {
+                        if (F[checkposi][checkposj].PieceType == Piece.Type.King)
+                        {
+                            break;
+                        }
+                        SetPoint(checkposi, checkposj);
                     }
                 }
                 else break;
@@ -321,14 +337,18 @@ namespace Chess.ViewModels
 
                 if (CheckOnBoard(checkposi, checkposj))
                 {
-                    if (F[checkposi][checkposj].PieceType == Piece.Type.Empty)
-                    {
-                        SetPoint(checkposi, checkposj);
-                    }
-                    else
+                    if (F[checkposi][checkposj].PieceType != Piece.Type.Empty & F[checkposi][checkposj].PieceType != Piece.Type.King)
                     {
                         SetCircle(checkposi, checkposj);
                         break;
+                    }
+                    else
+                    {
+                        if (F[checkposi][checkposj].PieceType == Piece.Type.King)
+                        {
+                            break;
+                        }
+                        SetPoint(checkposi, checkposj);
                     }
                 }
                 else break;
@@ -341,14 +361,18 @@ namespace Chess.ViewModels
 
                 if (CheckOnBoard(checkposi, checkposj))
                 {
-                    if (F[checkposi][checkposj].PieceType == Piece.Type.Empty)
-                    {
-                        SetPoint(checkposi, checkposj);
-                    }
-                    else
+                    if (F[checkposi][checkposj].PieceType != Piece.Type.Empty & F[checkposi][checkposj].PieceType != Piece.Type.King)
                     {
                         SetCircle(checkposi, checkposj);
                         break;
+                    }
+                    else
+                    {
+                        if (F[checkposi][checkposj].PieceType == Piece.Type.King)
+                        {
+                            break;
+                        }
+                        SetPoint(checkposi, checkposj);
                     }
                 }
                 else break;
@@ -361,14 +385,18 @@ namespace Chess.ViewModels
 
                 if (CheckOnBoard(checkposi, checkposj))
                 {
-                    if (F[checkposi][checkposj].PieceType == Piece.Type.Empty)
-                    {
-                        SetPoint(checkposi, checkposj);
-                    }
-                    else
+                    if (F[checkposi][checkposj].PieceType != Piece.Type.Empty & F[checkposi][checkposj].PieceType != Piece.Type.King)
                     {
                         SetCircle(checkposi, checkposj);
                         break;
+                    }
+                    else
+                    {
+                        if (F[checkposi][checkposj].PieceType == Piece.Type.King)
+                        {
+                            break;
+                        }
+                        SetPoint(checkposi, checkposj);
                     }
                 }
                 else break;
@@ -381,14 +409,18 @@ namespace Chess.ViewModels
 
                 if (CheckOnBoard(checkposi, checkposj))
                 {
-                    if (F[checkposi][checkposj].PieceType == Piece.Type.Empty)
-                    {
-                        SetPoint(checkposi, checkposj);
-                    }
-                    else
+                    if (F[checkposi][checkposj].PieceType != Piece.Type.Empty & F[checkposi][checkposj].PieceType != Piece.Type.King)
                     {
                         SetCircle(checkposi, checkposj);
                         break;
+                    }
+                    else
+                    {
+                        if(F[checkposi][checkposj].PieceType == Piece.Type.King)
+                        {
+                            break;
+                        }
+                        SetPoint(checkposi, checkposj);
                     }
                 }
                 else break;
@@ -399,18 +431,18 @@ namespace Chess.ViewModels
         public void KickPawn(int a)
         {
             int checkposi = SelectedField.I - 1 * a;
-            int checkposj = SelectedField.J + 1 * a;
-            int checkposj2 = SelectedField.J - 1 * a;
+            int checkposj = SelectedField.J - 1 * a;
+            int checkposj2 = SelectedField.J + 1 * a;
             if (CheckOnBoard(checkposi, checkposj))
             {
-                if (F[checkposi][checkposj].PieceType != Piece.Type.Empty)
+                if (F[checkposi][checkposj].PieceType != Piece.Type.Empty & F[checkposi][checkposj].PieceType != Piece.Type.King)
                 {
                     SetCircle(checkposi, checkposj);
                 }
             }
             if (CheckOnBoard(checkposi, checkposj2))
             {
-                if (F[checkposi][checkposj2].PieceType != Piece.Type.Empty)
+                if (F[checkposi][checkposj2].PieceType != Piece.Type.Empty & F[checkposi][checkposj2].PieceType != Piece.Type.King)
                 {
                     SetCircle(checkposi, checkposj2);
                 }
