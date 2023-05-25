@@ -631,8 +631,53 @@ namespace Chess.ViewModels
                                 F[7][5].PieceColor = Piece.Color.White;
                                 F[7][7].PieceType = Piece.Type.Empty;
                                 F[7][7].PieceColor = Piece.Color.Empty;
+                                ClearPoints();
+                                ClearCircle();
                                 Move = color == Piece.Color.White ? Piece.Color.Black : Piece.Color.White;
-                            } else
+                            }
+                            else if ((field.I == 7 && field.J == 2) && kingMoveWhite == 0)
+                            {
+                                field.PieceColor = SelectedField.PieceColor;
+                                field.PieceType = SelectedField.PieceType;
+                                SelectedField.PieceType = Piece.Type.Empty;
+                                SelectedField.PieceColor = Piece.Color.Empty;
+                                F[7][3].PieceType = Piece.Type.Rook;
+                                F[7][3].PieceColor = Piece.Color.White;
+                                F[7][0].PieceType = Piece.Type.Empty;
+                                F[7][0].PieceColor = Piece.Color.Empty;
+                                ClearPoints();
+                                ClearCircle();
+                                Move = color == Piece.Color.White ? Piece.Color.Black : Piece.Color.White;
+                            }
+                            else if ((field.I == 0 && field.J == 6) && kingMoveBlack == 0)
+                            {
+                                field.PieceColor = SelectedField.PieceColor;
+                                field.PieceType = SelectedField.PieceType;
+                                SelectedField.PieceType = Piece.Type.Empty;
+                                SelectedField.PieceColor = Piece.Color.Empty;
+                                F[0][5].PieceType = Piece.Type.Rook;
+                                F[0][5].PieceColor = Piece.Color.Black;
+                                F[0][7].PieceType = Piece.Type.Empty;
+                                F[0][7].PieceColor = Piece.Color.Empty;
+                                ClearPoints();
+                                ClearCircle();
+                                Move = color == Piece.Color.White ? Piece.Color.Black : Piece.Color.White;
+                            }
+                            else if ((field.I == 0 && field.J == 2) && kingMoveBlack == 0)
+                            {
+                                field.PieceColor = SelectedField.PieceColor;
+                                field.PieceType = SelectedField.PieceType;
+                                SelectedField.PieceType = Piece.Type.Empty;
+                                SelectedField.PieceColor = Piece.Color.Empty;
+                                F[0][3].PieceType = Piece.Type.Rook;
+                                F[0][3].PieceColor = Piece.Color.Black;
+                                F[0][0].PieceType = Piece.Type.Empty;
+                                F[0][0].PieceColor = Piece.Color.Empty;
+                                ClearPoints();
+                                ClearCircle();
+                                Move = color == Piece.Color.White ? Piece.Color.Black : Piece.Color.White;
+                            }
+                            else
                             {
                                 ReverseFigures(field, color);
                             }
