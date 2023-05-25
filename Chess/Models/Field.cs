@@ -101,11 +101,6 @@ namespace Chess.Models
         public bool Defended { get => defended; set => Set(ref  defended, value); }
         #endregion
 
-        #region King Move
-        private int kingMove;
-        public int KingMove { get => kingMove; set => Set(ref kingMove, value); }
-        #endregion
-
         #region I
         private int i;
         public int I { get => i; set => Set(ref i, value); }

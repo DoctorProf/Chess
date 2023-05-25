@@ -15,6 +15,7 @@ using System.Windows;
 using Microsoft.Win32;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
+using System.Security.Policy;
 
 namespace Chess.ViewModels
 {
@@ -26,6 +27,9 @@ namespace Chess.ViewModels
             InitializePieces();
         }
         #region Properties
+
+        int kingMoveBlack = 0;
+        int kingMoveWhite = 0;
         private Field selectedField;
         public Field SelectedField { get => selectedField; set => Set(ref selectedField, value); }
 
@@ -150,6 +154,7 @@ namespace Chess.ViewModels
                 field.PieceType = Piece.Type.Queen;
             }
         }
+
         #region KickANdWalk Knight and King
         public void KickANdWalkKnight(int checkposi, int checkposj)
         {
@@ -178,8 +183,34 @@ namespace Chess.ViewModels
                     SetPoint(checkposi, checkposj);
                 }
             }
+
         }
-        
+        public void CheckCastling()
+        {
+            if (F[7][4].PieceType == Piece.Type.King && F[7][4].PieceColor == Piece.Color.White && kingMoveWhite == 0)
+            {
+                if (F[7][5].PieceType == Piece.Type.Empty && F[7][6].PieceType == Piece.Type.Empty && F[7][7].PieceType == Piece.Type.Rook)
+                {
+                    SetPoint(7, 6);
+                }
+                if (F[7][3].PieceType == Piece.Type.Empty && F[7][2].PieceType == Piece.Type.Empty && F[7][1].PieceType == Piece.Type.Empty && F[7][0].PieceType == Piece.Type.Rook)
+                {
+                    SetPoint(7, 2);
+                }
+            }
+            else if (F[0][4].PieceType == Piece.Type.King && F[0][4].PieceColor == Piece.Color.Black && kingMoveBlack == 0)
+            {
+                if (F[0][5].PieceType == Piece.Type.Empty && F[0][6].PieceType == Piece.Type.Empty && F[0][7].PieceType == Piece.Type.Rook)
+                {
+                    SetPoint(0, 6);
+                }
+                if (F[0][3].PieceType == Piece.Type.Empty && F[0][2].PieceType == Piece.Type.Empty && F[0][1].PieceType == Piece.Type.Empty && F[0][0].PieceType == Piece.Type.Rook)
+                {
+                    SetPoint(0, 2);
+                }
+            }
+        }
+
         public void AllKnight(int a)
         {
             int checkposi = SelectedField.I + a * -2;
@@ -220,6 +251,7 @@ namespace Chess.ViewModels
             KickANdWalkKing(checkposi1, checkposj2);
             KickANdWalkKing(checkposi, checkposj2);
             KickANdWalkKing(checkposi2, checkposj2);
+            CheckCastling();
         }
         #endregion
         public static bool CheckOnBoard(int i, int j)
@@ -416,7 +448,7 @@ namespace Chess.ViewModels
                     }
                     else
                     {
-                        if(F[checkposi][checkposj].PieceType == Piece.Type.King)
+                        if (F[checkposi][checkposj].PieceType == Piece.Type.King)
                         {
                             break;
                         }
@@ -448,6 +480,19 @@ namespace Chess.ViewModels
                 }
             }
         }
+        public void ReverseFigures(Field field, Piece.Color color)
+        {
+            Field tempField = field.Clone();
+            field.PieceColor = SelectedField.PieceColor;
+            field.PieceType = SelectedField.PieceType;
+            SelectedField.PieceColor = tempField.PieceColor;
+            SelectedField.PieceType = tempField.PieceType;
+            SelectedField.Selected = false;
+            SelectedField = null;
+            ClearPoints();
+            ClearCircle();
+            Move = color == Piece.Color.White ? Piece.Color.Black : Piece.Color.White;
+        }
         public void SetAllPoints()
         {
             switch (SelectedField.PieceType)
@@ -456,16 +501,23 @@ namespace Chess.ViewModels
 
                     if (SelectedField.PieceColor == Piece.Color.White)
                     {
-                        SetPoint(SelectedField.I - 1, SelectedField.J);
-                        if (SelectedField.I == 6) SetPoint(SelectedField.I - 2, SelectedField.J);
-                        KickPawn(1);
+                        if (F[SelectedField.I - 1][SelectedField.J].PieceType == Piece.Type.Empty)
+                        {
+                            SetPoint(SelectedField.I - 1, SelectedField.J);
+                            if (SelectedField.I == 6) SetPoint(SelectedField.I - 2, SelectedField.J);
 
+                        }
+                        KickPawn(1);
 
                     }
                     else if (SelectedField.PieceColor == Piece.Color.Black)
                     {
-                        SetPoint(SelectedField.I + 1, SelectedField.J);
-                        if (SelectedField.I == 1) SetPoint(SelectedField.I + 2, SelectedField.J);
+                        if (F[SelectedField.I + 1][SelectedField.J].PieceType == Piece.Type.Empty)
+                        {
+                            SetPoint(SelectedField.I + 1, SelectedField.J);
+                            if (SelectedField.I == 1) SetPoint(SelectedField.I + 2, SelectedField.J);
+
+                        }
                         KickPawn(-1);
                     }
                     break;
@@ -567,21 +619,41 @@ namespace Chess.ViewModels
                 {
                     if (field.TexturePath == TexturesPaths.Point)
                     {
-                        Field tempField = field.Clone();
-                        field.PieceColor = SelectedField.PieceColor;
-                        field.PieceType = SelectedField.PieceType;
-                        field.TexturePath = SelectedField.TexturePath;
+                        if (SelectedField.PieceType == Piece.Type.King)
+                        {
+                            if ((field.I == 7 && field.J == 6) && kingMoveWhite == 0)
+                            {
+                                field.PieceColor = SelectedField.PieceColor;
+                                field.PieceType = SelectedField.PieceType;
+                                SelectedField.PieceType = Piece.Type.Empty;
+                                SelectedField.PieceColor = Piece.Color.Empty;
+                                F[7][5].PieceType = Piece.Type.Rook;
+                                F[7][5].PieceColor = Piece.Color.White;
+                                F[7][7].PieceType = Piece.Type.Empty;
+                                F[7][7].PieceColor = Piece.Color.Empty;
+                                Move = color == Piece.Color.White ? Piece.Color.Black : Piece.Color.White;
+                            } else
+                            {
+                                ReverseFigures(field, color);
+                            }
 
-                        PawnOnQueen(field);
-
-                        SelectedField.PieceColor = tempField.PieceColor;
-                        SelectedField.PieceType = tempField.PieceType;
-                        SelectedField.TexturePath = tempField.TexturePath;
-                        SelectedField.Selected = false;
-                        SelectedField = null;
-                        ClearPoints();
-                        ClearCircle();
-                        Move = color == Piece.Color.White ? Piece.Color.Black : Piece.Color.White;
+                        }
+                        else
+                        {
+                            PawnOnQueen(field);
+                            if (field.PieceType == Piece.Type.King)
+                            {
+                                if (field.PieceColor == Piece.Color.White)
+                                {
+                                    kingMoveWhite += 1;
+                                }
+                                else
+                                {
+                                    kingMoveBlack += 1;
+                                }
+                            }
+                            ReverseFigures(field, color);
+                        }
                     }
                     else if (field.CircleTexture == TexturesPaths.Circle)
                     {
@@ -589,6 +661,18 @@ namespace Chess.ViewModels
                         field.PieceType = SelectedField.PieceType;
                         field.TexturePath = SelectedField.TexturePath;
                         PawnOnQueen(field);
+                        if (field.PieceType == Piece.Type.King)
+                        {
+                            if (field.PieceColor == Piece.Color.White)
+                            {
+                                kingMoveWhite += 1;
+                            }
+                            else
+                            {
+                                kingMoveBlack += 1;
+                            }
+
+                        }
                         SelectedField.PieceColor = Piece.Color.Empty;
                         SelectedField.PieceType = Piece.Type.Empty;
                         SelectedField.TexturePath = TexturesPaths.Empty;
@@ -614,6 +698,7 @@ namespace Chess.ViewModels
                 MoveLogic(field, Move, fvm);
             }
         }
+
         #region Starting position
         public void InitializePieces()
         {
