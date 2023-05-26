@@ -132,6 +132,20 @@ namespace Chess.ViewModels
 				}
 			}
 		}
+		public void ClearDefended()
+		{
+			for (int i = 0; i < 8; i++)
+			{
+				for (int j = 0; j < 8; j++)
+				{
+					if (F[i][j].DefendedBlack || F[i][j].DefendedWhite)
+					{
+						F[i][j].DefendedBlack = false;
+						F[i][j].DefendedWhite = false;
+					}
+				}
+			}
+		}
 		public void SetPoint(int i, int j)
 		{
 			if (((i >= 0 & i <= 7) & (j >= 0 & j <= 7)) && F[i][j].PieceType == Piece.Type.Empty)
@@ -146,8 +160,384 @@ namespace Chess.ViewModels
 				F[i][j].CircleTexture = TexturesPaths.Circle;
 			}
 		}
-		#endregion
-		public void PawnOnQueen(Field field)
+		public void SetDefended()
+		{
+			for (int i = 0; i < 8; i++)
+			{
+				for (int j = 0; j < 8; j++)
+				{
+					if (F[i][j].PieceType == Piece.Type.Pawn)
+					{
+						if (F[i][j].PieceColor == Piece.Color.White)
+						{
+							if (CheckOnBoard(i - 1, j - 1))
+							{
+								F[i - 1][j - 1].DefendedWhite = true;
+
+							}
+							if (CheckOnBoard(i - 1, j + 1))
+							{
+								F[i - 1][j + 1].DefendedWhite = true;
+							}
+						}
+						else if (F[i][j].PieceColor == Piece.Color.Black)
+						{
+							if (CheckOnBoard(i + 1, j - 1))
+							{
+								F[i + 1][j - 1].DefendedBlack = true;
+
+							}
+							if (CheckOnBoard(i + 1, j + 1))
+							{
+								F[i + 1][j + 1].DefendedBlack = true;
+							}
+						}
+					}
+					if (F[i][j].PieceType == Piece.Type.Knight)
+					{
+						if (F[i][j].PieceColor == Piece.Color.White)
+						{
+							if (CheckOnBoard(i - 2, j - 1))
+							{
+								F[i - 2][j - 1].DefendedWhite = true;
+
+							}
+							if (CheckOnBoard(i - 2, j + 1))
+							{
+								F[i - 2][j + 1].DefendedWhite = true;
+							}
+							if (CheckOnBoard(i - 1, j + 2))
+							{
+								F[i - 1][j + 2].DefendedWhite = true;
+
+							}
+							if (CheckOnBoard(i + 1, j + 2))
+							{
+								F[i + 1][j + 2].DefendedWhite = true;
+							}
+							if (CheckOnBoard(i + 2, j + 1))
+							{
+								F[i + 2][j + 1].DefendedWhite = true;
+
+							}
+							if (CheckOnBoard(i + 2, j - 1))
+							{
+								F[i + 2][j - 1].DefendedWhite = true;
+							}
+							if (CheckOnBoard(i + 1, j - 2))
+							{
+								F[i + 1][j - 2].DefendedWhite = true;
+
+							}
+							if (CheckOnBoard(i - 1, j - 2))
+							{
+								F[i - 1][j - 2].DefendedWhite = true;
+							}
+						}
+						else if (F[i][j].PieceColor == Piece.Color.Black)
+						{
+							if (CheckOnBoard(i - 2, j - 1))
+							{
+								F[i - 2][j - 1].DefendedBlack = true;
+
+							}
+							if (CheckOnBoard(i - 2, j + 1))
+							{
+								F[i - 2][j + 1].DefendedBlack = true;
+							}
+							if (CheckOnBoard(i - 1, j + 2))
+							{
+								F[i - 1][j + 2].DefendedBlack = true;
+
+							}
+							if (CheckOnBoard(i + 1, j + 2))
+							{
+								F[i + 1][j + 2].DefendedBlack = true;
+							}
+							if (CheckOnBoard(i + 2, j + 1))
+							{
+								F[i + 2][j + 1].DefendedBlack = true;
+
+							}
+							if (CheckOnBoard(i + 2, j - 1))
+							{
+								F[i + 2][j - 1].DefendedBlack = true;
+							}
+							if (CheckOnBoard(i + 1, j - 2))
+							{
+								F[i + 1][j - 2].DefendedBlack = true;
+
+							}
+							if (CheckOnBoard(i - 1, j - 2))
+							{
+								F[i - 1][j - 2].DefendedBlack = true;
+							}
+						}
+					}
+					if (F[i][j].PieceType == Piece.Type.Bishop)
+					{
+						if (F[i][j].PieceColor == Piece.Color.White)
+						{
+							DefendedBishopWhite(i,j);
+						}
+						else if (F[i][j].PieceColor == Piece.Color.Black)
+						{
+							DefendedBishopBlack(i,j);
+						}
+					}
+                    if (F[i][j].PieceType == Piece.Type.Rook)
+                    {
+                        if (F[i][j].PieceColor == Piece.Color.White)
+                        {
+                            DefendedBishopWhite(i, j);
+                        }
+                        else if (F[i][j].PieceColor == Piece.Color.Black)
+                        {
+                            DefendedBishopBlack(i, j);
+                        }
+                    }
+                    if (F[i][j].PieceType == Piece.Type.Queen)
+                    {
+                        if (F[i][j].PieceColor == Piece.Color.White)
+                        {
+                            DefendedBishopWhite(i, j);
+							DefendedRookWhite(i, j);
+                        }
+                        else if (F[i][j].PieceColor == Piece.Color.Black)
+                        {
+                            DefendedBishopBlack(i, j);
+							DefendedRookBlack(i, j);
+                        }
+                    }
+                    if (F[i][j].PieceType == Piece.Type.King)
+                    {
+                        if (F[i][j].PieceColor == Piece.Color.White)
+                        {
+                            if (CheckOnBoard(i - 1, j - 1))
+                            {
+                                F[i - 1][j - 1].DefendedWhite = true;
+
+                            }
+                            if (CheckOnBoard(i - 1, j))
+                            {
+                                F[i - 1][j].DefendedWhite = true;
+                            }
+                            if (CheckOnBoard(i - 1, j + 1))
+                            {
+                                F[i - 1][j + 1].DefendedWhite = true;
+
+                            }
+                            if (CheckOnBoard(i, j - 1))
+                            {
+                                F[i][j - 1].DefendedWhite = true;
+                            }
+                            if (CheckOnBoard(i, j + 1))
+                            {
+                                F[i][j + 1].DefendedWhite = true;
+
+                            }
+                            if (CheckOnBoard(i + 1, j - 1))
+                            {
+                                F[i + 1][j - 1].DefendedWhite = true;
+                            }
+                            if (CheckOnBoard(i + 1, j))
+                            {
+                                F[i + 1][j].DefendedWhite = true;
+
+                            }
+                            if (CheckOnBoard(i + 1, j + 1))
+                            {
+                                F[i + 1][j + 1].DefendedWhite = true;
+                            }
+                        }
+                        else if (F[i][j].PieceColor == Piece.Color.Black)
+                        {
+                            if (CheckOnBoard(i - 1, j - 1))
+                            {
+                                F[i - 1][j - 1].DefendedBlack = true;
+
+                            }
+                            if (CheckOnBoard(i - 1, j))
+                            {
+                                F[i - 1][j].DefendedBlack = true;
+                            }
+                            if (CheckOnBoard(i - 1, j + 1))
+                            {
+                                F[i - 1][j + 1].DefendedBlack = true;
+
+                            }
+                            if (CheckOnBoard(i, j - 1))
+                            {
+                                F[i][j - 1].DefendedBlack = true;
+                            }
+                            if (CheckOnBoard(i, j + 1))
+                            {
+                                F[i][j + 1].DefendedBlack = true;
+
+                            }
+                            if (CheckOnBoard(i + 1, j - 1))
+                            {
+                                F[i + 1][j - 1].DefendedBlack = true;
+                            }
+                            if (CheckOnBoard(i + 1, j))
+                            {
+                                F[i + 1][j].DefendedBlack = true;
+
+                            }
+                            if (CheckOnBoard(i + 1, j + 1))
+                            {
+                                F[i + 1][j + 1].DefendedBlack = true;
+                            }
+                        }
+                    }
+                }
+			}
+		}
+        #region DefendedBishop
+        public void DefendedBishopWhite(int i, int j) 
+		{
+            for (int k = 1; k <= 7; k++)
+            {
+                if (CheckOnBoard(i - k, j - k))
+                {
+                    F[i - k][j - k].DefendedWhite = true;
+                    if (F[i - k][j - k].PieceType != Piece.Type.Empty) break;
+                }
+            }
+            for (int m = 1; m <= 7; m++)
+            {
+                if (CheckOnBoard(i - m, j + m))
+                {
+                    F[i - m][j + m].DefendedWhite = true;
+                    if (F[i - m][j + m].PieceType != Piece.Type.Empty) break;
+                }
+            }
+            for (int l = 1; l <= 7; l++)
+            {
+                if (CheckOnBoard(i + l, j + l))
+                {
+                    F[i + l][j + l].DefendedWhite = true;
+                    if (F[i + l][j + l].PieceType != Piece.Type.Empty) break;
+                }
+            }
+            for (int n = 1; n <= 7; n++)
+            {
+                if (CheckOnBoard(i + n, j - n))
+                {
+                    F[i + n][j - n].DefendedWhite = true;
+                    if (F[i + n][j - n].PieceType != Piece.Type.Empty) break;
+                }
+            }
+        }
+        public void DefendedBishopBlack(int i, int j)
+        {
+            for (int k = 1; k <= 7; k++)
+            {
+                if (CheckOnBoard(i - k, j - k))
+                {
+                    F[i - k][j - k].DefendedBlack = true;
+                    if (F[i - k][j - k].PieceType != Piece.Type.Empty) break;
+                }
+            }
+            for (int m = 1; m <= 7; m++)
+            {
+                if (CheckOnBoard(i - m, j + m))
+                {
+                    F[i - m][j + m].DefendedBlack = true;
+                    if (F[i - m][j + m].PieceType != Piece.Type.Empty) break;
+                }
+            }
+            for (int l = 1; l <= 7; l++)
+            {
+                if (CheckOnBoard(i + l, j + l))
+                {
+                    F[i + l][j + l].DefendedBlack = true;
+                    if (F[i + l][j + l].PieceType != Piece.Type.Empty) break;
+                }
+            }
+            for (int n = 1; n <= 7; n++)
+            {
+                if (CheckOnBoard(i + n, j - n))
+                {
+                    F[i + n][j - n].DefendedBlack = true;
+                    if (F[i + n][j - n].PieceType != Piece.Type.Empty) break;
+                }
+            }
+        }
+        #endregion
+
+        public void DefendedRookWhite(int i, int j)
+        {
+            for (int k = 1; k <= 7; k++)
+            {
+                if (CheckOnBoard(i - k, j))
+                {
+                    F[i - k][j].DefendedWhite = true;
+                    if (F[i - k][j].PieceType != Piece.Type.Empty) break;
+                }
+            }
+            for (int m = 1; m <= 7; m++)
+            {
+                if (CheckOnBoard(i + m, j))
+                {
+                    F[i + m][j].DefendedWhite = true;
+                    if (F[i + m][j].PieceType != Piece.Type.Empty) break;
+                }
+            }
+            for (int l = 1; l <= 7; l++)
+            {
+                if (CheckOnBoard(i, j + l))
+                {
+                    F[i][j + l].DefendedWhite = true;
+                    if (F[i][j + l].PieceType != Piece.Type.Empty) break;
+                }
+            }
+            for (int n = 1; n <= 7; n++)
+            {
+                if (CheckOnBoard(i, j - n))
+                {
+                    F[i][j - n].DefendedWhite = true;
+                    if (F[i][j - n].PieceType != Piece.Type.Empty) break;
+                }
+            }
+        }
+        public void DefendedRookBlack(int i, int j)
+        {
+            for (int k = 1; k <= 7; k++)
+            {
+                if (CheckOnBoard(i - k, j))
+                {
+                    F[i - k][j].DefendedBlack = true;
+                    if (F[i - k][j].PieceType != Piece.Type.Empty) break;
+                }
+            }
+            for (int m = 1; m <= 7; m++)
+            {
+                if (CheckOnBoard(i + m, j))
+                {
+                    F[i + m][j].DefendedBlack = true;
+                    if (F[i + m][j].PieceType != Piece.Type.Empty) break;
+                }
+            }
+            for (int l = 1; l <= 7; l++)
+            {
+                if (CheckOnBoard(i, j + l))
+                {
+                    F[i][j + l].DefendedBlack = true;
+                    if (F[i][j + l].PieceType != Piece.Type.Empty) break;
+                }
+            }
+            for (int n = 1; n <= 7; n++)
+            {
+                if (CheckOnBoard(i, j - n))
+                {
+                    F[i][j - n].DefendedBlack = true;
+                    if (F[i][j - n].PieceType != Piece.Type.Empty) break;
+                }
+            }
+        }
+        #endregion
+        public void PawnOnQueen(Field field)
 		{
 			if ((field.I == 0 || field.I == 7) & SelectedField.PieceType == Piece.Type.Pawn)
 			{
@@ -174,20 +564,34 @@ namespace Chess.ViewModels
 		{
 			if (CheckOnBoard(checkposi, checkposj))
 			{
-				if (F[checkposi][checkposj].PieceType != Piece.Type.Empty & F[checkposi][checkposj].PieceType != Piece.Type.King)
+				if (SelectedField.PieceColor == Piece.Color.White && !F[checkposi][checkposj].DefendedBlack)
 				{
+					if (F[checkposi][checkposj].PieceType != Piece.Type.Empty && F[checkposi][checkposj].PieceType != Piece.Type.King)
+					{
 						SetCircle(checkposi, checkposj);
-				}
-				else
-				{
+					}
+					else
+					{
 						SetPoint(checkposi, checkposj);
+					}
+				}
+				if (SelectedField.PieceColor == Piece.Color.Black && !F[checkposi][checkposj].DefendedWhite)
+				{
+					if (F[checkposi][checkposj].PieceType != Piece.Type.Empty && F[checkposi][checkposj].PieceType != Piece.Type.King)
+					{
+						SetCircle(checkposi, checkposj);
+					}
+					else
+					{
+						SetPoint(checkposi, checkposj);
+					}
 				}
 			}
 
 		}
 		public void CheckCastling()
 		{
-			if (F[7][4].PieceType == Piece.Type.King && F[7][4].PieceColor == Piece.Color.White && kingMoveWhite == 0)
+			if (F[7][4].PieceType == Piece.Type.King && F[7][4].PieceColor == Piece.Color.White && kingMoveWhite == 0 && Move == Piece.Color.White)
 			{
 				if (F[7][5].PieceType == Piece.Type.Empty && F[7][6].PieceType == Piece.Type.Empty && F[7][7].PieceType == Piece.Type.Rook)
 				{
@@ -198,7 +602,7 @@ namespace Chess.ViewModels
 					SetPoint(7, 2);
 				}
 			}
-			else if (F[0][4].PieceType == Piece.Type.King && F[0][4].PieceColor == Piece.Color.Black && kingMoveBlack == 0)
+			if (F[0][4].PieceType == Piece.Type.King && F[0][4].PieceColor == Piece.Color.Black && kingMoveBlack == 0 && Move == Piece.Color.Black)
 			{
 				if (F[0][5].PieceType == Piece.Type.Empty && F[0][6].PieceType == Piece.Type.Empty && F[0][7].PieceType == Piece.Type.Rook)
 				{
@@ -482,6 +886,7 @@ namespace Chess.ViewModels
 		}
 		public void ReverseFigures(Field field, Piece.Color color)
 		{
+
 			Field tempField = field.Clone();
 			field.PieceColor = SelectedField.PieceColor;
 			field.PieceType = SelectedField.PieceType;
@@ -579,23 +984,23 @@ namespace Chess.ViewModels
 					break;
 			}
 		}
-		public void Castling(Field field, Piece.Color color,int i, int j, int j1) 
+		public void Castling(Field field, Piece.Color color, int i, int j, int j1)
 		{
-            field.PieceColor = SelectedField.PieceColor;
-            field.PieceType = SelectedField.PieceType;
-            SelectedField.PieceType = Piece.Type.Empty;
-            SelectedField.PieceColor = Piece.Color.Empty;
+			field.PieceColor = SelectedField.PieceColor;
+			field.PieceType = SelectedField.PieceType;
+			SelectedField.PieceType = Piece.Type.Empty;
+			SelectedField.PieceColor = Piece.Color.Empty;
 			SelectedField.Selected = false;
-            F[i][j].PieceType = Piece.Type.Rook;
-            F[i][j].PieceColor = color;
-            F[i][j1].PieceType = Piece.Type.Empty;
-            F[i][j1].PieceColor = Piece.Color.Empty;
-            ClearPoints();
-            ClearCircle();
-            Move = color == Piece.Color.White ? Piece.Color.Black : Piece.Color.White;
-        }
+			F[i][j].PieceType = Piece.Type.Rook;
+			F[i][j].PieceColor = color;
+			F[i][j1].PieceType = Piece.Type.Empty;
+			F[i][j1].PieceColor = Piece.Color.Empty;
+			ClearPoints();
+			ClearCircle();
+			Move = color == Piece.Color.White ? Piece.Color.Black : Piece.Color.White;
+		}
 
-        public void MoveLogic(Field field, Piece.Color color, Field_ViewModel fvm)
+		public void MoveLogic(Field field, Piece.Color color, Field_ViewModel fvm)
 		{
 
 			if (field.PieceType != Piece.Type.Empty & field.PieceColor == Move)
@@ -640,19 +1045,23 @@ namespace Chess.ViewModels
 							if ((field.I == 7 && field.J == 6) && kingMoveWhite == 0)
 							{
 								Castling(field, color, 7, 5, 7);
+								kingMoveWhite += 1;
 							}
 							else if ((field.I == 7 && field.J == 2) && kingMoveWhite == 0)
 							{
-                                Castling(field, color, 7, 3, 0);
-							}
+								Castling(field, color, 7, 3, 0);
+                                kingMoveWhite += 1;
+                            }
 							else if ((field.I == 0 && field.J == 6) && kingMoveBlack == 0)
 							{
-                                Castling(field, color, 0, 5, 7);
-							}
+								Castling(field, color, 0, 5, 7);
+                                kingMoveBlack += 1;
+                            }
 							else if ((field.I == 0 && field.J == 2) && kingMoveBlack == 0)
 							{
-                                Castling(field, color, 0, 3, 0);
-							}
+								Castling(field, color, 0, 3, 0);
+                                kingMoveBlack += 1;
+                            }
 							else
 							{
 								ReverseFigures(field, color);
@@ -699,6 +1108,7 @@ namespace Chess.ViewModels
 						SelectedField.TexturePath = TexturesPaths.Empty;
 						SelectedField.Selected = false;
 						SelectedField = null;
+
 						ClearPoints();
 						ClearCircle();
 						Move = color == Piece.Color.White ? Piece.Color.Black : Piece.Color.White;
@@ -711,11 +1121,15 @@ namespace Chess.ViewModels
 			// Если ходят белые
 			if (Move == Piece.Color.White)
 			{
+				ClearDefended();
+				SetDefended();
 				MoveLogic(field, Move, fvm);
 
 			}
 			else
 			{
+				ClearDefended();
+				SetDefended();
 				MoveLogic(field, Move, fvm);
 			}
 		}

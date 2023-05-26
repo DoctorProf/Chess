@@ -97,8 +97,13 @@ namespace Chess.Models
         #endregion
 
         #region DefendedBlack
-        private bool defended = false;
-        public bool Defended { get => defended; set => Set(ref  defended, value); }
+        private bool defendedBlack = false;
+        public bool DefendedBlack { get => defendedBlack; set => Set(ref defendedBlack, value); }
+        #endregion
+
+        #region DefendedWhite
+        private bool defendedWhite = false;
+        public bool DefendedWhite { get => defendedWhite; set => Set(ref defendedWhite, value); }
         #endregion
 
         #region I
