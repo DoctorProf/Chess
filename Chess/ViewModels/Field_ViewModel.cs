@@ -46,6 +46,7 @@ namespace Chess.ViewModels
             set => Set(ref f, value);
         }
         #endregion
+
         #endregion
 
         #region GenerateField
