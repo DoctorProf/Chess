@@ -1,105 +1,74 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Chess.View.Pages;
+﻿using System.Collections.ObjectModel;
 using Chess.ViewModels.Base;
 using Chess.Models;
-using System.Windows.Media;
-using System.ComponentModel;
 using Chess.Constants;
 using System.Windows;
-using Microsoft.Win32;
-using System.Security;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Policy;
 
 namespace Chess.ViewModels
 {
     internal class Field_ViewModel : ViewModel
     {
+        #region Constructor
         public Field_ViewModel()
         {
-            Size = "8";
+            StartGame();
+        }
+        #endregion
+
+        #region Start Game
+        public void StartGame()
+        {
+            GenerateField();
             InitializePieces();
         }
+        #endregion
+
         #region Properties
 
         int kingMoveBlack = 0;
         int kingMoveWhite = 0;
+
+        #region Selected Field
         private Field selectedField;
         public Field SelectedField { get => selectedField; set => Set(ref selectedField, value); }
+        #endregion
 
+        #region Move
         private Piece.Color move = Piece.Color.White;
         public Piece.Color Move { get => move; set => Set(ref move, value); }
+        #endregion
 
-
+        #region Field
         ObservableCollection<ObservableCollection<Field>> f = new();
         public ObservableCollection<ObservableCollection<Field>> F
         {
             get => f;
             set => Set(ref f, value);
         }
-        DataTable field;
-        public DataTable Field
-        {
-            get => field;
-            set => Set(ref field, value);
-        }
+        #endregion
         #endregion
 
-        #region PropertyGenerateField
-        int size = 0;
-        public string Size
+        #region GenerateField
+        public void GenerateField()
         {
-            get => size.ToString();
-            set
+            f.Clear();
+            for (int i = 0; i < 8; i++)
             {
-                if (int.TryParse(value, out int newSize))
+                ObservableCollection<Field> fRow = new();
+                for (int j = 0; j < 8; j++)
                 {
-                    Set(ref size, newSize);
-
-                    DataTable newField = new();
-                    for (int i = 0; i < newSize; i++)
-                        newField.Columns.Add();
-
-                    for (int i = 0; i < newSize; i++)
+                    string bgc = "";
+                    if ((i + j) % 2 != 0)
                     {
-                        object[] row = new object[newSize];
-                        for (int j = 0; j < size; j++)
-                            row[j] = i * 10 + j;
-                        newField.Rows.Add(row);
+                        bgc = "#769655";
                     }
-                    Field = newField;
-
-
-                    f.Clear();
-                    for (int i = 0; i < newSize; i++)
+                    else
                     {
-                        ObservableCollection<Field> fRow = new();
-                        for (int j = 0; j < size; j++)
-                            fRow.Add(new Field() { I = i, J = j });
-                        f.Add(fRow);
+                        bgc = "#EEEED2";
                     }
+                    fRow.Add(new Field() { I = i, J = j, BackgroundColor = bgc });
                 }
-                for (int i = 0; i < size; i++)
-                {
-                    for (int j = 0; j < size; j++)
-                    {
-                        Field cell = f[i][j];
-                        if ((i + j) % 2 != 0)
-                        {
-                            cell.BackgroundColor = "#769655";
-                        }
-                        else
-                        {
-                            cell.BackgroundColor = "#eeeed2";
-                        }
-                    }
-                }
+                f.Add(fRow);
             }
         }
         #endregion
@@ -539,6 +508,8 @@ namespace Chess.ViewModels
         }
         #endregion
         #endregion
+
+        #region Pawb On Queen
         public void PawnOnQueen(Field field)
         {
             if ((field.I == 0 || field.I == 7) & SelectedField.PieceType == Piece.Type.Pawn)
@@ -546,8 +517,9 @@ namespace Chess.ViewModels
                 field.PieceType = Piece.Type.Queen;
             }
         }
+        #endregion
 
-        #region KickANdWalk Knight and King
+        #region KickAndWalk Knight and King
         public void KickAndWalkKnight(int checkposi, int checkposj)
         {
             if (CheckOnBoard(checkposi, checkposj))
@@ -562,6 +534,9 @@ namespace Chess.ViewModels
                 }
             }
         }
+        #endregion
+
+        #region Kick And Walk King
         public void KickAndWalkKing(int checkposi, int checkposj)
         {
             if (CheckOnBoard(checkposi, checkposj))
@@ -589,8 +564,11 @@ namespace Chess.ViewModels
                     }
                 }
             }
-
         }
+
+        #endregion
+
+        #region Check Castling
         public void CheckCastling()
         {
             if (F[7][4].PieceType == Piece.Type.King && F[7][4].PieceColor == Piece.Color.White && kingMoveWhite == 0 && Move == Piece.Color.White)
@@ -616,7 +594,9 @@ namespace Chess.ViewModels
                 }
             }
         }
+        #endregion
 
+        #region All Knight
         public void AllKnight(int a)
         {
             int checkposi = SelectedField.I + a * -2;
@@ -637,8 +617,10 @@ namespace Chess.ViewModels
             KickAndWalkKnight(checkposi3, checkposj);
             KickAndWalkKnight(checkposi2, checkposj3);
             KickAndWalkKnight(checkposi1, checkposj3);
-
         }
+        #endregion
+
+        #region All King
         public void AllKing()
         {
             int checkposi = SelectedField.I;
@@ -660,10 +642,14 @@ namespace Chess.ViewModels
             CheckCastling();
         }
         #endregion
+
+        #region CheckOnBoard
         public static bool CheckOnBoard(int i, int j)
         {
             return i >= 0 && i < 8 && j >= 0 && j < 8;
         }
+        #endregion
+
         #region SetPoint Bishop and Rook
         public void SetPointBishop(int a)
         {
@@ -866,6 +852,8 @@ namespace Chess.ViewModels
             }
         }
         #endregion
+
+        #region KickPawn
         public void KickPawn(int a)
         {
             int checkposi = SelectedField.I - 1 * a;
@@ -886,6 +874,9 @@ namespace Chess.ViewModels
                 }
             }
         }
+        #endregion
+
+        #region Reverse Figures
         public void ReverseFigures(Field field, Piece.Color color)
         {
 
@@ -903,6 +894,9 @@ namespace Chess.ViewModels
             ClearCircle();
             Move = color == Piece.Color.White ? Piece.Color.Black : Piece.Color.White;
         }
+        #endregion
+
+        #region SetAllPoints
         public void SetAllPoints()
         {
             switch (SelectedField.PieceType)
@@ -989,6 +983,9 @@ namespace Chess.ViewModels
                     break;
             }
         }
+        #endregion
+
+        #region Castling
         public void Castling(Field field, Piece.Color color, int i, int j, int j1)
         {
             field.PieceColor = SelectedField.PieceColor;
@@ -1004,11 +1001,14 @@ namespace Chess.ViewModels
             ClearCircle();
             Move = color == Piece.Color.White ? Piece.Color.Black : Piece.Color.White;
         }
+        #endregion
+
+        #region CheckMate
         public void Checkmate()
         {
-            for (int i = 0; i <= 7; i++)
+            for (int i = 0; i < 8; i++)
             {
-                for (int j = 0; j <= 7; j++)
+                for (int j = 0; j < 8; j++)
                 {
                     if (f[i][j].PieceType == Piece.Type.King)
                     {
@@ -1043,7 +1043,10 @@ namespace Chess.ViewModels
             }
         }
 
-        public void MoveLogic(Field field, Piece.Color color, Field_ViewModel fvm)
+        #endregion
+
+        #region Move Logic
+        public void MoveLogic(Field field, Piece.Color color)
         {
 
             if (field.PieceType != Piece.Type.Empty & field.PieceColor == Move)
@@ -1161,20 +1164,24 @@ namespace Chess.ViewModels
                 }
             }
         }
-        public void ClickField(Field field, Field_ViewModel fvm)
+        #endregion
+
+        #region Click field
+        public void ClickField(Field field)
         {
             // Если ходят белые
             if (Move == Piece.Color.White)
             {
-                
-                MoveLogic(field, Move, fvm);
+
+                MoveLogic(field, Move);
 
             }
             else
             {
-                MoveLogic(field, Move, fvm);
+                MoveLogic(field, Move);
             }
         }
+        #endregion
 
         #region Starting position
         public void InitializePieces()
