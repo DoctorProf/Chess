@@ -12,6 +12,7 @@ using Chess.ViewModels;
 using System.Windows.Markup.Localizer;
 using System.Windows;
 using System.Configuration;
+using System.Windows.Documents;
 
 namespace Chess.Models
 {
@@ -30,7 +31,7 @@ namespace Chess.Models
                 return selectedBackgroundColor;
             }
             set => Set(ref selectedBackgroundColor, value);
-        
+
         }
         public void UpdateBackground() {
             SelectedBackgroundColor = selected ? "LightGray" : BackgroundColor;
@@ -40,7 +41,7 @@ namespace Chess.Models
         {
             if (PieceType != Piece.Type.Empty && PieceColor != Piece.Color.Empty)
             {
-                TexturePath = TexturesPaths.ImageFolder + pieceType.ToString() + "_" + pieceColor.ToString()+".png";
+                TexturePath = TexturesPaths.ImageFolder + pieceType.ToString() + "_" + pieceColor.ToString() + ".png";
             } else
             {
                 TexturePath = TexturesPaths.Empty;
@@ -65,7 +66,7 @@ namespace Chess.Models
         private Piece.Color pieceColor = Piece.Color.Empty;
         public Piece.Color PieceColor
         {
-            get => pieceColor; 
+            get => pieceColor;
             set
             {
                 Set(ref pieceColor, value);
@@ -77,9 +78,9 @@ namespace Chess.Models
         #region TexturePath
         private string texturePath = TexturesPaths.Empty;
         public string TexturePath { get => texturePath; set {
-        
+
                 Set(ref texturePath, value);
-        } }
+            } }
         #endregion
 
         #region CircleTexture
@@ -114,6 +115,11 @@ namespace Chess.Models
         #region J
         private int j;
         public int J { get => j; set => Set(ref j, value); }
+        #endregion
+
+        #region Blocked
+        private bool blocked = false;
+        public bool Blocked { get => blocked; set => Set(ref blocked, value); }
         #endregion
 
         #region Clone
