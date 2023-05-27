@@ -90,7 +90,7 @@ namespace Chess.ViewModels
             }
         }
 
-        public void setLogic()
+        public void SetLogic()
         {
             ClearDefended();
             SetDefended();
@@ -467,28 +467,32 @@ namespace Chess.ViewModels
         #region Check Castling
         public void CheckCastling()
         {
-            if (F[7][4].PieceType == Piece.Type.King && F[7][4].PieceColor == Piece.Color.White && kingMoveWhite == 0 && Move == Piece.Color.White)
-            {
-                if (F[7][5].PieceType == Piece.Type.Empty && F[7][6].PieceType == Piece.Type.Empty && F[7][7].PieceType == Piece.Type.Rook)
+                if (F[7][4].PieceType == Piece.Type.King && F[7][4].PieceColor == Piece.Color.White && kingMoveWhite == 0 && Move == Piece.Color.White)
                 {
-                    SetPoint(7, 6);
+                    if (F[7][5].PieceType == Piece.Type.Empty && F[7][6].PieceType == Piece.Type.Empty && F[7][7].PieceType == Piece.Type.Rook
+                        && !F[7][4].DefendedBlack && !F[7][5].DefendedBlack && !F[7][6].DefendedBlack)
+                    {
+                        SetPoint(7, 6);
+                    }
+                    if (F[7][3].PieceType == Piece.Type.Empty && F[7][2].PieceType == Piece.Type.Empty && F[7][1].PieceType == Piece.Type.Empty && F[7][0].PieceType == Piece.Type.Rook
+                        && !F[7][4].DefendedBlack && !F[7][3].DefendedBlack && !F[7][2].DefendedBlack && !F[7][1].DefendedBlack)
+                    {
+                        SetPoint(7, 2);
+                    }
                 }
-                if (F[7][3].PieceType == Piece.Type.Empty && F[7][2].PieceType == Piece.Type.Empty && F[7][1].PieceType == Piece.Type.Empty && F[7][0].PieceType == Piece.Type.Rook)
+                if (F[0][4].PieceType == Piece.Type.King && F[0][4].PieceColor == Piece.Color.Black && kingMoveBlack == 0 && Move == Piece.Color.Black)
                 {
-                    SetPoint(7, 2);
+                    if (F[0][5].PieceType == Piece.Type.Empty && F[0][6].PieceType == Piece.Type.Empty && F[0][7].PieceType == Piece.Type.Rook
+                        && !F[0][4].DefendedWhite && !F[0][5].DefendedWhite && !F[0][6].DefendedWhite)
+                    {
+                        SetPoint(0, 6);
+                    }
+                    if (F[0][3].PieceType == Piece.Type.Empty && F[0][2].PieceType == Piece.Type.Empty && F[0][1].PieceType == Piece.Type.Empty && F[0][0].PieceType == Piece.Type.Rook
+                        && !F[0][4].DefendedWhite && !F[0][3].DefendedWhite && !F[0][2].DefendedWhite && !F[0][1].DefendedWhite)
+                    {
+                        SetPoint(0, 2);
+                    }
                 }
-            }
-            if (F[0][4].PieceType == Piece.Type.King && F[0][4].PieceColor == Piece.Color.Black && kingMoveBlack == 0 && Move == Piece.Color.Black)
-            {
-                if (F[0][5].PieceType == Piece.Type.Empty && F[0][6].PieceType == Piece.Type.Empty && F[0][7].PieceType == Piece.Type.Rook)
-                {
-                    SetPoint(0, 6);
-                }
-                if (F[0][3].PieceType == Piece.Type.Empty && F[0][2].PieceType == Piece.Type.Empty && F[0][1].PieceType == Piece.Type.Empty && F[0][0].PieceType == Piece.Type.Rook)
-                {
-                    SetPoint(0, 2);
-                }
-            }
         }
         #endregion
 
@@ -783,7 +787,7 @@ namespace Chess.ViewModels
             SelectedField.PieceType = tempField.PieceType;
             SelectedField.Selected = false;
             SelectedField = null;
-            setLogic();
+            SetLogic();
         }
         #endregion
 
@@ -1041,7 +1045,7 @@ namespace Chess.ViewModels
                         SelectedField.TexturePath = TexturesPaths.Empty;
                         SelectedField.Selected = false;
                         SelectedField = null;
-                        setLogic();
+                        SetLogic();
                     }
                 }
             }
@@ -1087,8 +1091,10 @@ namespace Chess.ViewModels
 
             for (int i = 0; i < 8; i++)
             {
+                /*
                 f[1][i].PieceType = Piece.Type.Pawn;
                 f[1][i].PieceColor = Piece.Color.Black;
+                */
             }
             #endregion
 
@@ -1120,8 +1126,10 @@ namespace Chess.ViewModels
 
             for (int i = 0; i < 8; i++)
             {
+                /*
                 f[6][i].PieceType = Piece.Type.Pawn;
                 f[6][i].PieceColor = Piece.Color.White;
+                */
             }
             #endregion
         }
