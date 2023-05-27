@@ -509,7 +509,7 @@ namespace Chess.ViewModels
         #endregion
         #endregion
 
-        #region Pawb On Queen
+        #region Pawn On Queen
         public void PawnOnQueen(Field field)
         {
             if ((field.I == 0 || field.I == 7) & SelectedField.PieceType == Piece.Type.Pawn)
