@@ -117,11 +117,6 @@ namespace Chess.Models
         public int J { get => j; set => Set(ref j, value); }
         #endregion
 
-        #region Blocked
-        private bool blocked = false;
-        public bool Blocked { get => blocked; set => Set(ref blocked, value); }
-        #endregion
-
         #region Clone
         public Field Clone()
         {

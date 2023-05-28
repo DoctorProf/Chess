@@ -3,6 +3,9 @@ using Chess.ViewModels.Base;
 using Chess.Models;
 using Chess.Constants;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Navigation;
+using System;
 
 namespace Chess.ViewModels
 {
@@ -97,15 +100,8 @@ namespace Chess.ViewModels
             Checkmate();
             ClearPoints();
             ClearCircle();
-            ClearBlocked();
             Move = Move == Piece.Color.White ? Piece.Color.Black : Piece.Color.White;
         }
-
-        public void ClearBlocked()
-        {
-
-        }
-
 
         public void ClearCircle()
         {
@@ -114,7 +110,6 @@ namespace Chess.ViewModels
                 for (int j = 0; j < 8; j++)
                 {
                     F[i][j].CircleTexture = TexturesPaths.Empty;
-                    F[i][j].Blocked = false;
                 }
             }
         }
@@ -285,22 +280,22 @@ namespace Chess.ViewModels
                     {
                         if (F[i][j].PieceColor == Piece.Color.White)
                         {
-                            for (int addi = -1; addi < 1; addi++)
+                            for (int addi = -1; addi < 2; addi++)
                             {
-                                for (int addj = -1; addj < 1; addj++)
+                                for (int addj = -1; addj < 2; addj++)
                                 {
-                                    if (addi == 1 && addj == 1) continue;
+                                    if (addi == 0 && addj == 0) continue;
                                     if (CheckOnBoard(i + addi, j + addj)) F[i + addi][j + addj].DefendedWhite = true;
                                 }
                             }
                         }
                         else if (F[i][j].PieceColor == Piece.Color.Black)
                         {
-                            for (int addi = -1; addi < 1; addi++)
+                            for (int addi = -1; addi < 2; addi++)
                             {
-                                for (int addj = -1; addj < 1; addj++)
+                                for (int addj = -1; addj < 2; addj++)
                                 {
-                                    if (addi == 1 && addj == 1) continue;
+                                    if (addi == 0 && addj == 0) continue;
                                     if (CheckOnBoard(i + addi, j + addj)) F[i + addi][j + addj].DefendedBlack = true;
                                 }
                             }
@@ -320,7 +315,7 @@ namespace Chess.ViewModels
                     if (c == Piece.Color.White) F[i - k][j - k].DefendedWhite = true;
                     else if (c == Piece.Color.Black) F[i - k][j - k].DefendedBlack = true;
 
-                    if (F[i - k][j - k].PieceType != Piece.Type.Empty) break;
+                    if (F[i - k][j - k].PieceType != Piece.Type.Empty && F[i - k][j - k].PieceType != Piece.Type.King) break;
                 }
             }
             for (k = 1; k < 8; k++)
@@ -330,7 +325,7 @@ namespace Chess.ViewModels
                     if (c == Piece.Color.White) F[i - k][j + k].DefendedWhite = true;
                     else if (c == Piece.Color.Black) F[i - k][j + k].DefendedBlack = true;
 
-                    if (F[i - k][j + k].PieceType != Piece.Type.Empty) break;
+                    if (F[i - k][j + k].PieceType != Piece.Type.Empty && F[i - k][j + k].PieceType != Piece.Type.King) break;
                 }
             }
             for (k = 1; k < 8; k++)
@@ -340,7 +335,7 @@ namespace Chess.ViewModels
                     if (c == Piece.Color.White) F[i + k][j + k].DefendedWhite = true;
                     else if (c == Piece.Color.Black) F[i + k][j + k].DefendedBlack = true;
 
-                    if (F[i + k][j + k].PieceType != Piece.Type.Empty) break;
+                    if (F[i + k][j + k].PieceType != Piece.Type.Empty && F[i + k][j + k].PieceType != Piece.Type.King) break;
                 }
             }
             for (k = 1; k < 8; k++)
@@ -350,7 +345,7 @@ namespace Chess.ViewModels
                     if (c == Piece.Color.White) F[i + k][j - k].DefendedWhite = true;
                     else if (c == Piece.Color.Black) F[i + k][j - k].DefendedBlack = true;
 
-                    if (F[i + k][j - k].PieceType != Piece.Type.Empty) break;
+                    if (F[i + k][j - k].PieceType != Piece.Type.Empty && F[i + k][j - k].PieceType != Piece.Type.King) break;
                 }
             }
         }
@@ -367,7 +362,7 @@ namespace Chess.ViewModels
                     if (c == Piece.Color.White) F[i - k][j].DefendedWhite = true;
                     else if(c == Piece.Color.Black) F[i - k][j].DefendedBlack = true;
 
-                    if (F[i - k][j].PieceType != Piece.Type.Empty) break;
+                    if (F[i - k][j].PieceType != Piece.Type.Empty && F[i - k][j].PieceType != Piece.Type.King) break;
                 }
             }
             for (k = 1; k < 8; k++)
@@ -377,7 +372,7 @@ namespace Chess.ViewModels
                     if (c == Piece.Color.White) F[i + k][j].DefendedWhite = true;
                     else if (c == Piece.Color.Black) F[i + k][j].DefendedBlack = true;
 
-                    if (F[i + k][j].PieceType != Piece.Type.Empty) break;
+                    if (F[i + k][j].PieceType != Piece.Type.Empty && F[i + k][j].PieceType != Piece.Type.King) break;
                 }
             }
             for (k = 1; k < 8; k++)
@@ -387,7 +382,7 @@ namespace Chess.ViewModels
                     if (c == Piece.Color.White) F[i][j + k].DefendedWhite = true;
                     else if (c == Piece.Color.Black) F[i][j + k].DefendedBlack = true;
 
-                    if (F[i][j + k].PieceType != Piece.Type.Empty) break;
+                    if (F[i][j + k].PieceType != Piece.Type.Empty && F[i][j + k].PieceType != Piece.Type.King) break;
                 }
             }
             for (k = 1; k < 8; k++)
@@ -397,7 +392,7 @@ namespace Chess.ViewModels
                     if (c == Piece.Color.White) F[i][j - k].DefendedWhite = true;
                     else if (c == Piece.Color.Black) F[i][j - k].DefendedBlack = true;
 
-                    if (F[i][j - k].PieceType != Piece.Type.Empty) break;
+                    if (F[i][j - k].PieceType != Piece.Type.Empty && F[i][j - k].PieceType != Piece.Type.King) break;
                 }
             }
         }
@@ -469,22 +464,26 @@ namespace Chess.ViewModels
         {
             if (F[7][4].PieceType == Piece.Type.King && F[7][4].PieceColor == Piece.Color.White && kingMoveWhite == 0 && Move == Piece.Color.White)
             {
-                if (F[7][5].PieceType == Piece.Type.Empty && F[7][6].PieceType == Piece.Type.Empty && F[7][7].PieceType == Piece.Type.Rook)
+                if (F[7][5].PieceType == Piece.Type.Empty && F[7][6].PieceType == Piece.Type.Empty && F[7][7].PieceType == Piece.Type.Rook &&
+                    !F[7][4].DefendedBlack && !F[7][5].DefendedBlack && !F[7][6].DefendedBlack)
                 {
                     SetPoint(7, 6);
                 }
-                if (F[7][3].PieceType == Piece.Type.Empty && F[7][2].PieceType == Piece.Type.Empty && F[7][1].PieceType == Piece.Type.Empty && F[7][0].PieceType == Piece.Type.Rook)
+                if (F[7][3].PieceType == Piece.Type.Empty && F[7][2].PieceType == Piece.Type.Empty && F[7][1].PieceType == Piece.Type.Empty && F[7][0].PieceType == Piece.Type.Rook &&
+                    !F[7][4].DefendedBlack && !F[7][3].DefendedBlack && !F[7][2].DefendedBlack && !F[7][1].DefendedBlack)
                 {
                     SetPoint(7, 2);
                 }
             }
             if (F[0][4].PieceType == Piece.Type.King && F[0][4].PieceColor == Piece.Color.Black && kingMoveBlack == 0 && Move == Piece.Color.Black)
             {
-                if (F[0][5].PieceType == Piece.Type.Empty && F[0][6].PieceType == Piece.Type.Empty && F[0][7].PieceType == Piece.Type.Rook)
+                if (F[0][5].PieceType == Piece.Type.Empty && F[0][6].PieceType == Piece.Type.Empty && F[0][7].PieceType == Piece.Type.Rook &&
+                    !F[0][4].DefendedWhite && !F[0][5].DefendedWhite && !F[0][6].DefendedWhite)
                 {
                     SetPoint(0, 6);
                 }
-                if (F[0][3].PieceType == Piece.Type.Empty && F[0][2].PieceType == Piece.Type.Empty && F[0][1].PieceType == Piece.Type.Empty && F[0][0].PieceType == Piece.Type.Rook)
+                if (F[0][3].PieceType == Piece.Type.Empty && F[0][2].PieceType == Piece.Type.Empty && F[0][1].PieceType == Piece.Type.Empty && F[0][0].PieceType == Piece.Type.Rook &&
+                    !F[0][4].DefendedWhite && !F[0][3].DefendedWhite && !F[0][2].DefendedWhite && !F[0][1].DefendedWhite)
                 {
                     SetPoint(0, 2);
                 }
@@ -787,6 +786,13 @@ namespace Chess.ViewModels
         }
         #endregion
 
+        #region GoToMenu
+        public void GoToMenu()
+        {
+            Frame frame = (Frame)Application.Current.MainWindow.Content;
+            NavigationService.GetNavigationService((Page)frame.Content).Navigate(new Uri("/View/Pages/Menu.xaml", UriKind.RelativeOrAbsolute));
+        }
+        #endregion
         #region SetAllPoints
         public void SetAllPoints()
         {
@@ -893,7 +899,20 @@ namespace Chess.ViewModels
             Move = Move == Piece.Color.White ? Piece.Color.Black : Piece.Color.White;
         }
         #endregion
-
+        public bool King()
+        {
+            for(int i = 0; i < 8; i++)
+            {
+                for(int j = 0; j < 8; j++)
+                {
+                    if (F[i][j].PieceType == Piece.Type.King && F[i][j].PieceColor == Move)
+                    {
+                        return F[i][j].PieceColor == Piece.Color.White ? F[i][j].DefendedBlack : F[i][j].DefendedWhite; ;
+                    }
+                }
+            }
+            return false;
+        }
         #region CheckMate
         public void Checkmate()
         {
@@ -912,7 +931,8 @@ namespace Chess.ViewModels
                                     (!CheckOnBoard(i - 1, j + 1) || F[i - 1][j + 1].DefendedBlack || (F[i - 1][j + 1].PieceType != Piece.Type.Empty & F[i - 1][j + 1].PieceColor == Piece.Color.White)) && (!CheckOnBoard(i + 1, j) || F[i + 1][j].DefendedBlack || (F[i + 1][j].PieceType != Piece.Type.Empty & F[i + 1][j].PieceColor == Piece.Color.White)) &&
                                     (!CheckOnBoard(i, j - 1) || F[i][j - 1].DefendedBlack || (F[i][j - 1].PieceType != Piece.Type.Empty & F[i][j - 1].PieceColor == Piece.Color.White)) && (!CheckOnBoard(i + 1, j + 1) || F[i + 1][j + 1].DefendedBlack || (F[i + 1][j + 1].PieceType != Piece.Type.Empty & F[i + 1][j + 1].PieceColor == Piece.Color.White)))
                                 {
-                                    MessageBox.Show("Выйграли черные");
+                                    MessageBox.Show(" CheckMate Black Win");
+                                    GoToMenu();
                                     
                                 }
                             }
@@ -926,7 +946,8 @@ namespace Chess.ViewModels
                                     (!CheckOnBoard(i - 1, j + 1) || F[i - 1][j + 1].DefendedWhite || (F[i - 1][j + 1].PieceType != Piece.Type.Empty & F[i - 1][j + 1].PieceColor == Piece.Color.Black)) && (!CheckOnBoard(i + 1, j) || F[i + 1][j].DefendedWhite || (F[i + 1][j].PieceType != Piece.Type.Empty & F[i + 1][j].PieceColor == Piece.Color.Black)) &&
                                     (!CheckOnBoard(i, j - 1) || F[i][j - 1].DefendedWhite || (F[i][j - 1].PieceType != Piece.Type.Empty & F[i][j - 1].PieceColor == Piece.Color.Black)) && (!CheckOnBoard(i + 1, j + 1) || F[i + 1][j + 1].DefendedWhite || (F[i + 1][j + 1].PieceType != Piece.Type.Empty & F[i + 1][j + 1].PieceColor == Piece.Color.Black)))
                                 {
-                                    MessageBox.Show("Выйграли белые");
+                                    MessageBox.Show("CheckMate White Win");
+                                    GoToMenu();
                                 }
                             }
                         }
@@ -943,6 +964,10 @@ namespace Chess.ViewModels
             {
                 if (field.PieceColor == Move)
                 {
+                    if (King()) 
+                    { 
+                        if(field.PieceType != Piece.Type.King) { return; }
+                    }
                     if (SelectedField == null)
                     {
                         SelectedField = field;
