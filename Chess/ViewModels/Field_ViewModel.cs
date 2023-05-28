@@ -95,16 +95,15 @@ namespace Chess.ViewModels
 
         public void SetLogic()
         {
-            ClearDefended();
-            SetDefended();
-            Checkmate();
             ClearPoints();
             ClearCircle();
-            ClearBlocked();
+            SetDefended();
+            Checkmate();
+            checkShah();
             Move = Move == Piece.Color.White ? Piece.Color.Black : Piece.Color.White;
         }
 
-        public void ClearBlocked()
+        public void checkShah()
         {
 
         }
@@ -118,20 +117,8 @@ namespace Chess.ViewModels
                 {
                     F[i][j].CircleTexture = TexturesPaths.Empty;
                     F[i][j].Blocked = false;
-                }
-            }
-        }
-        public void ClearDefended()
-        {
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < 8; j++)
-                {
-                    if (F[i][j].DefendedBlack || F[i][j].DefendedWhite)
-                    {
-                        F[i][j].DefendedBlack = false;
-                        F[i][j].DefendedWhite = false;
-                    }
+                    F[i][j].DefendedBlack = false;
+                    F[i][j].DefendedWhite = false;
                 }
             }
         }
@@ -276,12 +263,12 @@ namespace Chess.ViewModels
                         if (F[i][j].PieceColor == Piece.Color.White)
                         {
                             DefendedBishop(i, j, F[i][j].PieceColor);
-                            DefendedRook(i, j, Piece.Color.White);
+                            DefendedRook(i, j, F[i][j].PieceColor);
                         }
                         else if (F[i][j].PieceColor == Piece.Color.Black)
                         {
                             DefendedBishop(i, j, F[i][j].PieceColor);
-                            DefendedRook(i, j, Piece.Color.Black);
+                            DefendedRook(i, j, F[i][j].PieceColor);
                         }
                     }
                     if (F[i][j].PieceType == Piece.Type.King)
