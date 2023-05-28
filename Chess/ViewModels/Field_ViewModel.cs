@@ -3,6 +3,9 @@ using Chess.ViewModels.Base;
 using Chess.Models;
 using Chess.Constants;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Navigation;
+using System;
 
 namespace Chess.ViewModels
 {
@@ -900,6 +903,16 @@ namespace Chess.ViewModels
         }
         #endregion
 
+        #region GoToMenu
+
+        public void GoToMenu()
+        {
+            Frame frame = (Frame)Application.Current.MainWindow.Content;
+            NavigationService.GetNavigationService((Page)frame.Content).Navigate(new Uri("View/Pages/menu.xaml", UriKind.RelativeOrAbsolute));
+        }
+
+        #endregion
+
         #region CheckMate
         public void Checkmate()
         {
@@ -919,7 +932,7 @@ namespace Chess.ViewModels
                                     (!CheckOnBoard(i, j - 1) || F[i][j - 1].DefendedBlack || (F[i][j - 1].PieceType != Piece.Type.Empty & F[i][j - 1].PieceColor == Piece.Color.White)) && (!CheckOnBoard(i + 1, j + 1) || F[i + 1][j + 1].DefendedBlack || (F[i + 1][j + 1].PieceType != Piece.Type.Empty & F[i + 1][j + 1].PieceColor == Piece.Color.White)))
                                 {
                                     MessageBox.Show("Выйграли черные");
-                                    
+                                    GoToMenu();
                                 }
                             }
                         }
@@ -933,6 +946,7 @@ namespace Chess.ViewModels
                                     (!CheckOnBoard(i, j - 1) || F[i][j - 1].DefendedWhite || (F[i][j - 1].PieceType != Piece.Type.Empty & F[i][j - 1].PieceColor == Piece.Color.Black)) && (!CheckOnBoard(i + 1, j + 1) || F[i + 1][j + 1].DefendedWhite || (F[i + 1][j + 1].PieceType != Piece.Type.Empty & F[i + 1][j + 1].PieceColor == Piece.Color.Black)))
                                 {
                                     MessageBox.Show("Выйграли белые");
+                                    GoToMenu();
                                 }
                             }
                         }
