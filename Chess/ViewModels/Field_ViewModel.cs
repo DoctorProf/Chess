@@ -411,6 +411,8 @@ namespace Chess.ViewModels
             if ((field.I == 0 || field.I == 7) & SelectedField.PieceType == Piece.Type.Pawn)
             {
                 field.PieceType = Piece.Type.Queen;
+                SelectedField.PieceType = Piece.Type.Empty;
+                SelectedField.PieceColor = Piece.Color.Empty;
             }
         }
         #endregion
@@ -1091,10 +1093,10 @@ namespace Chess.ViewModels
 
             for (int i = 0; i < 8; i++)
             {
-                /*
+                
                 f[1][i].PieceType = Piece.Type.Pawn;
                 f[1][i].PieceColor = Piece.Color.Black;
-                */
+                
             }
             #endregion
 
@@ -1126,10 +1128,10 @@ namespace Chess.ViewModels
 
             for (int i = 0; i < 8; i++)
             {
-                /*
+                
                 f[6][i].PieceType = Piece.Type.Pawn;
                 f[6][i].PieceColor = Piece.Color.White;
-                */
+                
             }
             #endregion
         }
