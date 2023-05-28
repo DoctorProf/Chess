@@ -1092,10 +1092,10 @@ namespace Chess.ViewModels
 
             for (int i = 0; i < 8; i++)
             {
-                /*
+                
                 f[1][i].PieceType = Piece.Type.Pawn;
                 f[1][i].PieceColor = Piece.Color.Black;
-                */
+                
             }
             #endregion
 
@@ -1127,10 +1127,10 @@ namespace Chess.ViewModels
 
             for (int i = 0; i < 8; i++)
             {
-                /*
+                
                 f[6][i].PieceType = Piece.Type.Pawn;
                 f[6][i].PieceColor = Piece.Color.White;
-                */
+                
             }
             #endregion
         }
