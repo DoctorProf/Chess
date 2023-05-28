@@ -17,7 +17,8 @@
         <c:FConverter x:Key="FConverter"/>
         <DataTemplate x:Key="DataTemplate_Level2">
             <Button Command="{StaticResource FieldCommand}"
-                    Height="50" Width="50" Margin="0" BorderThickness="0">
+                    Height="50" Width="50" Margin="0" BorderThickness="0"
+                     >
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Grid>
