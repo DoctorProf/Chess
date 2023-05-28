@@ -1069,7 +1069,7 @@ namespace Chess.ViewModels
         {
             #region Black pieces
             // Черные фигуры
-            /*
+            
             f[0][0].PieceType = Piece.Type.Rook;
             f[0][0].PieceColor = Piece.Color.Black;
 
@@ -1082,10 +1082,10 @@ namespace Chess.ViewModels
 
             f[0][3].PieceType = Piece.Type.Queen;
             f[0][3].PieceColor = Piece.Color.Black;
-            */
+            
             f[0][4].PieceType = Piece.Type.King;
             f[0][4].PieceColor = Piece.Color.Black;
-            /*
+            
             f[0][5].PieceType = Piece.Type.Bishop;
             f[0][5].PieceColor = Piece.Color.Black;
 
@@ -1094,7 +1094,7 @@ namespace Chess.ViewModels
 
             f[0][7].PieceType = Piece.Type.Rook;
             f[0][7].PieceColor = Piece.Color.Black;
-            */
+            
 
             for (int i = 0; i < 8; i++)
             {
@@ -1107,7 +1107,7 @@ namespace Chess.ViewModels
 
             #region White pieces
             // Белые
-            /*
+            
             f[7][0].PieceType = Piece.Type.Rook;
             f[7][0].PieceColor = Piece.Color.White;
 
@@ -1131,7 +1131,7 @@ namespace Chess.ViewModels
 
             f[7][7].PieceType = Piece.Type.Rook;
             f[7][7].PieceColor = Piece.Color.White;
-            */
+            
 
             for (int i = 0; i < 8; i++)
             {
