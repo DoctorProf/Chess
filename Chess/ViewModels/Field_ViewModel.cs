@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using System;
+using Microsoft.Win32;
 
 namespace Chess.ViewModels
 {
@@ -401,6 +402,9 @@ namespace Chess.ViewModels
             if ((field.I == 0 || field.I == 7) & SelectedField.PieceType == Piece.Type.Pawn)
             {
                 field.PieceType = Piece.Type.Queen;
+                field.PieceColor = SelectedField.PieceColor;
+                //SelectedField.PieceType = Piece.Type.Empty;
+                //SelectedField.PieceColor = Piece.Color.Empty;
             }
         }
         #endregion
@@ -769,12 +773,12 @@ namespace Chess.ViewModels
         #region Reverse Figures
         public void ReverseFigures(Field field)
         {
-            Field tempField = field.Clone();
             field.PieceColor = SelectedField.PieceColor;
             field.PieceType = SelectedField.PieceType;
             PawnOnQueen(field);
-            SelectedField.PieceColor = tempField.PieceColor;
-            SelectedField.PieceType = tempField.PieceType;
+            
+            SelectedField.PieceColor = Piece.Color.Empty;
+            SelectedField.PieceType = Piece.Type.Empty;
             SelectedField.Selected = false;
             SelectedField = null;
             SetLogic();
@@ -1065,6 +1069,7 @@ namespace Chess.ViewModels
         {
             #region Black pieces
             // Черные фигуры
+            /*
             f[0][0].PieceType = Piece.Type.Rook;
             f[0][0].PieceColor = Piece.Color.Black;
 
@@ -1077,10 +1082,10 @@ namespace Chess.ViewModels
 
             f[0][3].PieceType = Piece.Type.Queen;
             f[0][3].PieceColor = Piece.Color.Black;
-
+            */
             f[0][4].PieceType = Piece.Type.King;
             f[0][4].PieceColor = Piece.Color.Black;
-
+            /*
             f[0][5].PieceType = Piece.Type.Bishop;
             f[0][5].PieceColor = Piece.Color.Black;
 
@@ -1089,6 +1094,7 @@ namespace Chess.ViewModels
 
             f[0][7].PieceType = Piece.Type.Rook;
             f[0][7].PieceColor = Piece.Color.Black;
+            */
 
             for (int i = 0; i < 8; i++)
             {
@@ -1101,6 +1107,7 @@ namespace Chess.ViewModels
 
             #region White pieces
             // Белые
+            /*
             f[7][0].PieceType = Piece.Type.Rook;
             f[7][0].PieceColor = Piece.Color.White;
 
@@ -1124,6 +1131,7 @@ namespace Chess.ViewModels
 
             f[7][7].PieceType = Piece.Type.Rook;
             f[7][7].PieceColor = Piece.Color.White;
+            */
 
             for (int i = 0; i < 8; i++)
             {
