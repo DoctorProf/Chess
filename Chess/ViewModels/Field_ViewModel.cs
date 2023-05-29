@@ -1034,6 +1034,8 @@ namespace Chess.ViewModels
                                         {
                                             if (!attackFigures[m].DefendedWhite)
                                             {
+                                                ClearCircle();
+                                                ClearPoints();
                                                 MessageBox.Show("CheckMate Black Win");
                                                 GoToMenu();
                                             }
@@ -1057,6 +1059,8 @@ namespace Chess.ViewModels
                                         {
                                             if (!attackFigures[m].DefendedBlack)
                                             {
+                                                ClearCircle();
+                                                ClearPoints();
                                                 MessageBox.Show("CheckMate White Win");
                                                 GoToMenu();
                                             }
@@ -1104,6 +1108,7 @@ namespace Chess.ViewModels
                         {
                             SelectedField.Selected = false;
                             ClearPoints();
+                            ClearCircle();
                             SelectedField = field;
                             SelectedField.Selected = true;
                             SetAllPoints();
