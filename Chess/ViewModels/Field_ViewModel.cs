@@ -301,24 +301,31 @@ namespace Chess.ViewModels
                     if (F[i][j].PieceType == Piece.Type.King)
                     {
                         if (F[i][j].PieceColor == Piece.Color.White)
+                        if (F[i][j].PieceColor == Piece.Color.White)
                         {
-                            for (int addi = -1; addi < 2; addi++)
+                            if (!F[i][j].DefendedBlack)
                             {
-                                for (int addj = -1; addj < 2; addj++)
+                                for (int addi = -1; addi < 2; addi++)
                                 {
-                                    if (addi == 0 && addj == 0) continue;
-                                    if (CheckOnBoard(i + addi, j + addj)) F[i + addi][j + addj].DefendedWhite = true;
+                                    for (int addj = -1; addj < 2; addj++)
+                                    {
+                                        if (addi == 0 && addj == 0) continue;
+                                        if (CheckOnBoard(i + addi, j + addj)) F[i + addi][j + addj].DefendedWhite = true;
+                                    }
                                 }
                             }
                         }
                         else if (F[i][j].PieceColor == Piece.Color.Black)
                         {
-                            for (int addi = -1; addi < 2; addi++)
+                            if (!F[i][j].DefendedWhite)
                             {
-                                for (int addj = -1; addj < 2; addj++)
+                                for (int addi = -1; addi < 2; addi++)
                                 {
-                                    if (addi == 0 && addj == 0) continue;
-                                    if (CheckOnBoard(i + addi, j + addj)) F[i + addi][j + addj].DefendedBlack = true;
+                                    for (int addj = -1; addj < 2; addj++)
+                                    {
+                                        if (addi == 0 && addj == 0) continue;
+                                        if (CheckOnBoard(i + addi, j + addj)) F[i + addi][j + addj].DefendedBlack = true;
+                                    }
                                 }
                             }
                         }
@@ -982,9 +989,7 @@ namespace Chess.ViewModels
             F[i][j].PieceColor = Move;
             F[i][j1].PieceType = Piece.Type.Empty;
             F[i][j1].PieceColor = Piece.Color.Empty;
-            ClearPoints();
-            ClearCircle();
-            Move = Move == Piece.Color.White ? Piece.Color.Black : Piece.Color.White;
+            setLogic();
         }
         #endregion
 
@@ -1012,7 +1017,7 @@ namespace Chess.ViewModels
             {
                 for (int j = 0; j < 8; j++)
                 {
-                    if (f[i][j].PieceType == Piece.Type.King)
+                    if (F[i][j].PieceType == Piece.Type.King)
                     {
                         if (F[i][j].PieceColor == Piece.Color.White)
                         {
@@ -1025,11 +1030,11 @@ namespace Chess.ViewModels
                                 {
                                     for (int m = 0; m < attackFigures.Count; m++)
                                     {
-                                        if (attackFigures[i].PieceColor == Piece.Color.Black)
+                                        if (attackFigures[m].PieceColor == Piece.Color.Black)
                                         {
-                                            if (!attackFigures[i].DefendedWhite)
+                                            if (!attackFigures[m].DefendedWhite)
                                             {
-                                                MessageBox.Show(" CheckMate Black Win");
+                                                MessageBox.Show("CheckMate Black Win");
                                                 GoToMenu();
                                             }
                                         }
@@ -1048,11 +1053,11 @@ namespace Chess.ViewModels
                                 {
                                     for (int m = 0; m < attackFigures.Count; m++)
                                     {
-                                        if (attackFigures[i].PieceColor == Piece.Color.White)
+                                        if (attackFigures[m].PieceColor == Piece.Color.White)
                                         {
-                                            if (!attackFigures[i].DefendedBlack)
+                                            if (!attackFigures[m].DefendedBlack)
                                             {
-                                                MessageBox.Show(" CheckMate White Win");
+                                                MessageBox.Show("CheckMate White Win");
                                                 GoToMenu();
                                             }
                                         }
